@@ -35,7 +35,6 @@ const personalityType = computed(() => {
 
   return personalities[type] || personalities['INTJ']
 })
-
 const selectOption = (letter, index) => {
   if (optionVisible.value.includes(letter)) return
 
@@ -401,7 +400,7 @@ onMounted(() => {
 }
 
 .welcome-content {
-  opacity: 0;
+  opacity: 1;
   transform: translateY(20px);
 }
 
@@ -412,6 +411,15 @@ onMounted(() => {
 .slide-up-enter-from {
   opacity: 0;
   transform: translateY(30px);
+}
+
+.slide-up-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
 }
 
 .intro-text {

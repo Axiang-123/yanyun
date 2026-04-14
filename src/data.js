@@ -1,666 +1,666 @@
 export const questions = [
   {
     id: 1,
-    title: "入世",
-    question: "刚进游戏的第一件事是？",
+    title: "初入江湖",
+    question: "初入燕云世界，你做的第一件事是？",
     options: [
-      { letter: "A", text: "打开好友列表找搭子", types: { E: 1, I: 0 } },
-      { letter: "B", text: "看看有没啥活动和任务", types: { S: 1, N: 0 } },
-      { letter: "C", text: "随便逛逛，走到哪算哪", types: { P: 1, J: 0 } }
+      { letter: "A", text: "打开地图探索每个角落", types: { N: 1, S: 0 } },
+      { letter: "B", text: "去开封城找NPC对话", types: { S: 1, N: 0 } },
+      { letter: "C", text: "加入玩家社群找搭子", types: { E: 1, I: 0 } },
+      { letter: "D", text: "直接开始主线剧情", types: { J: 1, P: 0 } }
     ]
   },
   {
     id: 2,
-    title: "江湖",
-    question: "你在江湖中最在意的是什么？",
+    title: "侠义",
+    question: "在燕云世界中，你更认同哪种侠义精神？",
     options: [
-      { letter: "A", text: "广交天下豪杰", types: { E: 1, I: 0 } },
-      { letter: "B", text: "勤学苦练提升实力", types: { T: 1, F: 0 } },
-      { letter: "C", text: "寻找传说中的秘宝", types: { N: 1, S: 0 } },
-      { letter: "D", text: "劫富济贫快意恩仇", types: { P: 1, J: 0 } }
+      { letter: "A", text: "路见不平拔刀相助", types: { F: 1, T: 0 } },
+      { letter: "B", text: "隐姓埋名，暗中守护", types: { I: 1, E: 0 } },
+      { letter: "C", text: "劫富济贫，快意恩仇", types: { P: 1, J: 0 } },
+      { letter: "D", text: "以武止戈，一统江湖", types: { T: 1, F: 0 } }
     ]
   },
   {
     id: 3,
-    title: "论剑",
-    question: "面对强敌你会怎么做？",
+    title: "止戈",
+    question: "止戈论剑中，你更喜欢哪种战斗风格？",
     options: [
-      { letter: "A", text: "正面硬刚，狭路相逢勇者胜", types: { T: 1, F: 0 } },
-      { letter: "B", text: "智取为上，四两拨千斤", types: { N: 1, S: 0 } },
-      { letter: "C", text: "叫上好友一起上", types: { E: 1, I: 0 } },
-      { letter: "D", text: "先探虚实，再做打算", types: { J: 1, P: 0 } }
+      { letter: "A", text: "剑刀客，正面硬刚", types: { T: 1, F: 0 } },
+      { letter: "B", text: "醉拳飘逸，以柔克刚", types: { P: 1, J: 0 } },
+      { letter: "C", text: "长枪沉稳，一寸长一寸强", types: { J: 1, P: 0 } },
+      { letter: "D", text: "暗器神出鬼没", types: { N: 1, S: 0 } }
     ]
   },
   {
     id: 4,
-    title: "奇遇",
-    question: "偶遇一位受伤的陌生人，你会？",
+    title: "开封",
+    question: "开封城是燕云世界的中心，你在城中喜欢做什么？",
     options: [
-      { letter: "A", text: "毫不犹豫伸出援手", types: { F: 1, T: 0 } },
-      { letter: "B", text: "先观察是否是陷阱", types: { T: 1, F: 0 } },
-      { letter: "C", text: "交给官府处理", types: { S: 1, N: 0 } },
-      { letter: "D", text: "给他一些银两让他自己去看大夫", types: { P: 1, J: 0 } }
+      { letter: "A", text: "在醉花阴听江湖轶事", types: { N: 1, S: 0 } },
+      { letter: "B", text: "逛集市寻找稀有装备", types: { S: 1, N: 0 } },
+      { letter: "C", text: "与玩家切磋武艺", types: { E: 1, I: 0 } },
+      { letter: "D", text: "独自在城墙上俯瞰江湖", types: { I: 1, E: 0 } }
     ]
   },
   {
     id: 5,
-    title: "装备",
-    question: "你更看重装备的什么属性？",
+    title: "论剑",
+    question: "止戈论剑时，你更注重什么？",
     options: [
-      { letter: "A", text: "攻击力，越高越好", types: { T: 1, F: 0 } },
-      { letter: "B", text: "防御力，保命要紧", types: { S: 1, N: 0 } },
-      { letter: "C", text: "稀有度和外观", types: { N: 1, S: 0 } },
-      { letter: "D", text: "看缘分，适合自己最重要", types: { P: 1, J: 0 } }
+      { letter: "A", text: "练好真连，一套带走", types: { T: 1, F: 0 } },
+      { letter: "B", text: "见招拆招，灵活应对", types: { P: 1, J: 0 } },
+      { letter: "C", text: "团队配合，协同作战", types: { E: 1, I: 0 } },
+      { letter: "D", text: "研究对手，克制应对", types: { N: 1, S: 0 } }
     ]
   },
   {
     id: 6,
-    title: "任务",
-    question: "你会优先完成哪种任务？",
+    title: "武学",
+    question: "以下哪种武学流派最吸引你？",
     options: [
-      { letter: "A", text: "主线剧情，揭示江湖秘闻", types: { N: 1, S: 0 } },
-      { letter: "B", text: "日常委托，稳定收益", types: { S: 1, N: 0 } },
-      { letter: "C", text: "多人副本，热闘非凡", types: { E: 1, I: 0 } },
-      { letter: "D", text: "挑战极限，突破自我", types: { J: 1, P: 0 } }
+      { letter: "A", text: "破竹鸢，拳甲霸道", types: { T: 1, F: 0 } },
+      { letter: "B", text: "无名剑配九枪，飘逸灵动", types: { N: 1, S: 0 } },
+      { letter: "C", text: "双镖流派，恶心难缠", types: { P: 1, J: 0 } },
+      { letter: "D", text: "太极剑，以静制动", types: { J: 1, P: 0 } }
     ]
   },
   {
     id: 7,
-    title: "门派",
-    question: "你更喜欢加入什么样的门派？",
+    title: "奇术",
+    question: "止戈中，你最依赖哪个奇术？",
     options: [
-      { letter: "A", text: "少林武当，正道领袖", types: { S: 1, N: 0 } },
-      { letter: "B", text: "明教丐帮，亦正亦邪", types: { P: 1, J: 0 } },
-      { letter: "C", text: "逍遥派，独来独往", types: { I: 1, E: 0 } },
-      { letter: "D", text: "不加入门派，做个散人", types: { N: 1, S: 0 } }
+      { letter: "A", text: "清风霁月，必备解控", types: { F: 1, T: 0 } },
+      { letter: "B", text: "神龙吐火，高伤连招", types: { T: 1, F: 0 } },
+      { letter: "C", text: "太白醉月，万金油", types: { N: 1, S: 0 } },
+      { letter: "D", text: "鹰爪连凿，破防神技", types: { P: 1, J: 0 } }
     ]
   },
   {
     id: 8,
-    title: "性情",
-    question: "你的性格更接近以下哪种？",
+    title: "段位",
+    question: "你的止戈论剑目标段位是？",
     options: [
-      { letter: "A", text: "豪迈奔放，大块吃肉大碗喝酒", types: { E: 1, I: 0 } },
-      { letter: "B", text: "沉稳内敛，深藏不露", types: { I: 1, E: 0 } },
-      { letter: "C", text: "机智幽默，八面玲珑", types: { N: 1, S: 0 } },
-      { letter: "D", text: "冷血残酷，快意泿仇", types: { T: 1, F: 0 } }
+      { letter: "A", text: "无我，真正入门", types: { J: 1, P: 0 } },
+      { letter: "B", text: "流云，登堂入室", types: { N: 1, S: 0 } },
+      { letter: "C", text: "论剑登峰，巅峰王者", types: { T: 1, F: 0 } },
+      { letter: "D", text: "享受过程，不在乎段位", types: { P: 1, J: 0 } }
     ]
   },
   {
     id: 9,
-    title: "绝学",
-    question: "以下哪种武功最吸引你？",
+    title: "战斗",
+    question: "面对强敌，你会如何应对？",
     options: [
-      { letter: "A", text: "降龙十八掌，刚猛无比", types: { T: 1, F: 0 } },
-      { letter: "B", text: "凌波微步，轻盈飘逸", types: { P: 1, J: 0 } },
-      { letter: "C", text: "九阴真经，内功深厚", types: { S: 1, N: 0 } },
-      { letter: "D", text: "孤独九剑，无招胜有招", types: { N: 1, S: 0 } }
+      { letter: "A", text: "正面交锋，以硬碰硬", types: { T: 1, F: 0 } },
+      { letter: "B", text: "伺机而动，一击必杀", types: { P: 1, J: 0 } },
+      { letter: "C", text: "团队配合，协同作战", types: { E: 1, I: 0 } },
+      { letter: "D", text: "见招拆招，随机应变", types: { N: 1, S: 0 } }
     ]
   },
   {
     id: 10,
-    title: "日常",
-    question: "你在游戏中大部分时间在做什么？",
+    title: "连招",
+    question: "论剑时，你更看重什么能力？",
     options: [
-      { letter: "A", text: "和帮会兄弟聊天吹水", types: { E: 1, I: 0 } },
-      { letter: "B", text: "埋头刷副本不不休", types: { J: 1, P: 0 } },
-      { letter: "C", text: "在主城广场看人来人往", types: { S: 1, N: 0 } },
-      { letter: "D", text: "到处触发奇遇和彩蛋", types: { N: 1, S: 0 } }
+      { letter: "A", text: "稳定真连，10秒一套", types: { S: 1, N: 0 } },
+      { letter: "B", text: "快速反应，见招拆招", types: { N: 1, S: 0 } },
+      { letter: "C", text: "心理博弈，骗招反打", types: { T: 1, F: 0 } },
+      { letter: "D", text: "装备碾压，力大砖飞", types: { P: 1, J: 0 } }
     ]
   },
   {
     id: 11,
-    title: "纷争",
-    question: "看到有人在主城恶意PK，你会？",
+    title: "敌对",
+    question: "面对敌对势力的挑衅，你会？",
     options: [
-      { letter: "A", text: "路见不平拔刀相助", types: { F: 1, T: 0 } },
-      { letter: "B", text: "估算双方实力，决定是否插手", types: { T: 1, F: 0 } },
-      { letter: "C", text: "快速绕开，不想惹麻烦", types: { I: 1, E: 0 } },
-      { letter: "D", text: "通知官府或帮会管理", types: { J: 1, P: 0 } }
+      { letter: "A", text: "集结兄弟，正面反击", types: { E: 1, I: 0 } },
+      { letter: "B", text: "暂避锋芒，卧薪尝胆", types: { I: 1, E: 0 } },
+      { letter: "C", text: "暗中调查，收集情报", types: { N: 1, S: 0 } },
+      { letter: "D", text: "以彼之道还施彼身", types: { T: 1, F: 0 } }
     ]
   },
   {
     id: 12,
-    title: "情义",
-    question: "朋友向你借游戏币，你会？",
+    title: "社交",
+    question: "在燕云世界中，你更倾向于？",
     options: [
-      { letter: "A", text: "二话不说直接给", types: { F: 1, T: 0 } },
-      { letter: "B", text: "多少借一点，权当帮忙", types: { S: 1, N: 0 } },
-      { letter: "C", text: "询问用途再决定", types: { J: 1, P: 0 } },
-      { letter: "D", text: "找个借口拒绝", types: { T: 1, F: 0 } }
+      { letter: "A", text: "建立或加入强大帮会", types: { E: 1, I: 0 } },
+      { letter: "B", text: "与三五知己闯荡江湖", types: { F: 1, T: 0 } },
+      { letter: "C", text: "独来独往，做个散人", types: { I: 1, E: 0 } },
+      { letter: "D", text: "成为自由赏金猎人", types: { P: 1, J: 0 } }
     ]
   },
   {
     id: 13,
-    title: "秘境",
-    question: "探索秘境时你更喜欢？",
+    title: "历练",
+    question: "提升实力的途径很多，你更喜欢？",
     options: [
-      { letter: "A", text: "跟着任务指引走", types: { J: 1, P: 0 } },
-      { letter: "B", text: "自由探索每个角落", types: { P: 1, J: 0 } },
-      { letter: "C", text: "和队友配合突破", types: { E: 1, I: 0 } },
-      { letter: "D", text: "研究最优通关路线", types: { S: 1, N: 0 } }
+      { letter: "A", text: "木桩房练习真连", types: { J: 1, P: 0 } },
+      { letter: "B", text: "实战历练，在战斗中成长", types: { T: 1, F: 0 } },
+      { letter: "C", text: "探索秘境，寻找传承", types: { N: 1, S: 0 } },
+      { letter: "D", text: "研究攻略，提升理解", types: { S: 1, N: 0 } }
     ]
   },
   {
     id: 14,
-    title: "机缘",
-    question: "你更相信什么能改变命运？",
+    title: "恩怨",
+    question: "若有不共戴天之仇，你会？",
     options: [
-      { letter: "A", text: "勤奋努力，勤能补拙", types: { S: 1, N: 0 } },
-      { letter: "B", text: "命运缘分，天注定", types: { N: 1, S: 0 } },
-      { letter: "C", text: "结识贵人，互相成就", types: { E: 1, I: 0 } },
-      { letter: "D", text: "自己的选择和勇气", types: { T: 1, F: 0 } }
+      { letter: "A", text: "君子报仇十年不晚", types: { J: 1, P: 0 } },
+      { letter: "B", text: "当场了结快意恩仇", types: { T: 1, F: 0 } },
+      { letter: "C", text: "化敌为友以德报怨", types: { F: 1, T: 0 } },
+      { letter: "D", text: "冤冤相报不如放下", types: { N: 1, S: 0 } }
     ]
   },
   {
     id: 15,
-    title: "夜行",
-    question: "深夜独自在游戏里，你会？",
+    title: "装备",
+    question: "论剑时，你更看重装备什么属性？",
     options: [
-      { letter: "A", text: "蹲boss刷新点", types: { J: 1, P: 0 } },
-      { letter: "B", text: "在河边静静地钓鱼", types: { I: 1, E: 0 } },
-      { letter: "C", text: "找人切磋武艺", types: { E: 1, I: 0 } },
-      { letter: "D", text: "随便逛逛，享受宁静", types: { P: 1, J: 0 } }
+      { letter: "A", text: "时雨江凝套，闪避回血", types: { S: 1, N: 0 } },
+      { letter: "B", text: "御无缺套，极限防御", types: { J: 1, P: 0 } },
+      { letter: "C", text: "玩家增伤，提升输出", types: { T: 1, F: 0 } },
+      { letter: "D", text: "霸体效果，站桩输出", types: { P: 1, J: 0 } }
     ]
   },
   {
     id: 16,
-    title: "秘术",
-    question: "如果可以自定义技能，你想要？",
+    title: "秘宝",
+    question: "燕云世界中传说有诸多秘宝，你最想得到？",
     options: [
-      { letter: "A", text: "隐身术，来去无踪", types: { P: 1, J: 0 } },
-      { letter: "B", text: "读心术，了解他人想法", types: { N: 1, S: 0 } },
-      { letter: "C", text: "再生术，源源不断", types: { S: 1, N: 0 } },
-      { letter: "D", text: "召唤术，呼唤援军", types: { E: 1, I: 0 } }
+      { letter: "A", text: "上古神兵利器", types: { T: 1, F: 0 } },
+      { letter: "B", text: "内功心法秘籍", types: { S: 1, N: 0 } },
+      { letter: "C", text: "隐世轻功绝学", types: { P: 1, J: 0 } },
+      { letter: "D", text: "藏宝图探寻真相", types: { N: 1, S: 0 } }
     ]
   },
   {
     id: 17,
-    title: "敌友",
-    question: "你如何看待游戏中的敌对势力？",
+    title: "城池",
+    question: "燕云世界有多座城池，你最向往哪里？",
     options: [
-      { letter: "A", text: "非黑即白，必须消灭", types: { T: 1, F: 0 } },
-      { letter: "B", text: "立场不同而已，可以理解", types: { N: 1, S: 0 } },
-      { letter: "C", text: "也可以化敲为友", types: { F: 1, T: 0 } },
-      { letter: "D", text: "关我什么事，各玩各的", types: { I: 1, E: 0 } }
+      { letter: "A", text: "开封，繁华似锦", types: { E: 1, I: 0 } },
+      { letter: "B", text: "雁门关，塞外风雪", types: { S: 1, N: 0 } },
+      { letter: "C", text: "江南水乡，烟雨朦胧", types: { F: 1, T: 0 } },
+      { letter: "D", text: "昆仑西域，神秘莫测", types: { N: 1, S: 0 } }
     ]
   },
   {
     id: 18,
-    title: "秘境探索",
-    question: "进入一个未知秘境，你的策略是？",
+    title: "心法",
+    question: "内功心法是燕云武学的核心，你更注重？",
     options: [
-      { letter: "A", text: "小心翼翼，一步一回头", types: { J: 1, P: 0 } },
-      { letter: "B", text: "勇往直前，见招拆招", types: { P: 1, J: 0 } },
-      { letter: "C", text: "和队友商量分工配合", types: { E: 1, I: 0 } },
-      { letter: "D", text: "先观察地形，寻找捷径", types: { S: 1, N: 0 } }
+      { letter: "A", text: "攻击型心法，先发制人", types: { T: 1, F: 0 } },
+      { letter: "B", text: "防御型心法，以守待攻", types: { J: 1, P: 0 } },
+      { letter: "C", text: "辅助型心法，攻防兼备", types: { F: 1, T: 0 } },
+      { letter: "D", text: "隐匿型心法，出其不意", types: { P: 1, J: 0 } }
     ]
   },
   {
     id: 19,
-    title: "论道",
-    question: "你更认同哪种江湖理念？",
+    title: "义气",
+    question: "帮会兄弟有难，你会？",
     options: [
-      { letter: "A", text: "人在江湖，身不由己", types: { S: 1, N: 0 } },
-      { letter: "B", text: "相濡以沫，不如相忘于江湖", types: { N: 1, S: 0 } },
-      { letter: "C", text: "天下英雄，唯我独尊", types: { T: 1, F: 0 } },
-      { letter: "D", text: "与世无争，逍遥自在", types: { P: 1, J: 0 } }
+      { letter: "A", text: "二话不说立即支援", types: { F: 1, T: 0 } },
+      { letter: "B", text: "分析形势后决定", types: { T: 1, F: 0 } },
+      { letter: "C", text: "召集更多人再行动", types: { E: 1, I: 0 } },
+      { letter: "D", text: "暗中策划援助方案", types: { I: 1, E: 0 } }
     ]
   },
   {
     id: 20,
-    title: "装备获取",
-    question: "你更倾向于如何获得极品装备？",
+    title: "技能",
+    question: "论剑中，你更依赖哪种技能优先级？",
     options: [
-      { letter: "A", text: "氪金购买，省时省力", types: { T: 1, F: 0 } },
-      { letter: "B", text: "副本掉落，稳扎稳打", types: { S: 1, N: 0 } },
-      { letter: "C", text: "商人处精心选购", types: { J: 1, P: 0 } },
-      { letter: "D", text: "运气使然，遇见就买", types: { P: 1, J: 0 } }
+      { letter: "A", text: "处决=韦陀，最高优先级", types: { T: 1, F: 0 } },
+      { letter: "B", text: "特殊技，灵活多变", types: { N: 1, S: 0 } },
+      { letter: "C", text: "破防技，打开局面", types: { J: 1, P: 0 } },
+      { letter: "D", text: "卸式防反，后发制人", types: { P: 1, J: 0 } }
     ]
   },
   {
     id: 21,
-    title: "帮会",
-    question: "你希望帮会是一个什么样的存在？",
+    title: "技艺",
+    question: "除了武学，燕云还有各种生活技艺，你喜欢？",
     options: [
-      { letter: "A", text: "大家庭，互相帮助", types: { F: 1, T: 0 } },
-      { letter: "B", text: "精英团队，讲究效率", types: { J: 1, P: 0 } },
-      { letter: "C", text: "自由组织，随性而为", types: { P: 1, J: 0 } },
-      { letter: "D", text: "强大势力，威震四方", types: { T: 1, F: 0 } }
+      { letter: "A", text: "炼丹制药，悬壶济世", types: { S: 1, N: 0 } },
+      { letter: "B", text: "烹饪美食，民以食为天", types: { F: 1, T: 0 } },
+      { letter: "C", text: "锻造神兵，独步天下", types: { T: 1, F: 0 } },
+      { letter: "D", text: "诗词歌赋，逍遥自在", types: { N: 1, S: 0 } }
     ]
   },
   {
     id: 22,
-    title: "切磋",
-    question: "与人切磋武艺时，你更看重？",
+    title: "喝酒",
+    question: "太白醉月是万金油奇术，你习惯？",
     options: [
-      { letter: "A", text: "胜负结果", types: { T: 1, F: 0 } },
-      { letter: "B", text: "交流学习", types: { N: 1, S: 0 } },
-      { letter: "C", text: "展示风采", types: { E: 1, I: 0 } },
-      { letter: "D", text: "点到为止", types: { F: 1, T: 0 } }
+      { letter: "A", text: "开局喝酒上BUFF", types: { J: 1, P: 0 } },
+      { letter: "B", text: "吐火后接太白打火拳", types: { T: 1, F: 0 } },
+      { letter: "C", text: "处决前喝酒预输入吐火", types: { N: 1, S: 0 } },
+      { letter: "D", text: "不需要，太白太弱", types: { P: 1, J: 0 } }
     ]
   },
   {
     id: 23,
-    title: "奇遇",
-    question: "下列哪种奇遇最让你心动？",
+    title: "坐骑",
+    question: "燕云世界的坐骑系统独具特色，你更喜欢？",
     options: [
-      { letter: "A", text: "偶遇世外高人，传授绝世神功", types: { N: 1, S: 0 } },
-      { letter: "B", text: "误入地下密室，发现无数财宝", types: { S: 1, N: 0 } },
-      { letter: "C", text: "遇见知己，秉烛夜谈", types: { F: 1, T: 0 } },
-      { letter: "D", text: "卷入江湖恩怨，化解纷争", types: { E: 1, I: 0 } }
+      { letter: "A", text: "汗血宝马，纵横沙场", types: { T: 1, F: 0 } },
+      { letter: "B", text: "沙漠骆驼，耐力持久", types: { S: 1, N: 0 } },
+      { letter: "C", text: "仙鹤白鹿，飘逸出尘", types: { N: 1, S: 0 } },
+      { letter: "D", text: "轻功绝顶，无需坐骑", types: { P: 1, J: 0 } }
     ]
   },
   {
     id: 24,
-    title: "修行",
-    question: "你更喜欢用哪种方式提升实力？",
+    title: "恩怨",
+    question: "面对曾经伤害过你的人，你会？",
     options: [
-      { letter: "A", text: "闭关修炼，心无旁骛", types: { I: 1, E: 0 } },
-      { letter: "B", text: "实战锻炼，历练江湖", types: { P: 1, J: 0 } },
-      { letter: "C", text: "拜师学艺，少走弯路", types: { J: 1, P: 0 } },
-      { letter: "D", text: "集思广益，融会贯通", types: { N: 1, S: 0 } }
+      { letter: "A", text: "一笑泯恩仇", types: { F: 1, T: 0 } },
+      { letter: "B", text: "势不两立，有仇必报", types: { T: 1, F: 0 } },
+      { letter: "C", text: "相忘于江湖", types: { P: 1, J: 0 } },
+      { letter: "D", text: "观察其后续表现再定", types: { J: 1, P: 0 } }
     ]
   },
   {
     id: 25,
-    title: "财富",
-    question: "你更倾向于如何积累财富？",
+    title: "组队",
+    question: "挑战大型副本时，你更喜欢？",
     options: [
-      { letter: "A", text: "带帮派打城战，争夺资源", types: { E: 1, I: 0 } },
-      { letter: "B", text: "日常任务，稳扎稳打", types: { S: 1, N: 0 } },
-      { letter: "C", text: "囤积居奇，低买高卖", types: { T: 1, F: 0 } },
-      { letter: "D", text: "随缘而安，够用就好", types: { P: 1, J: 0 } }
+      { letter: "A", text: "与固定队伍配合默契", types: { J: 1, P: 0 } },
+      { letter: "B", text: "野队随机，挑战未知", types: { P: 1, J: 0 } },
+      { letter: "C", text: "单刷独战，证明实力", types: { I: 1, E: 0 } },
+      { letter: "D", text: "指挥全局，运筹帷幄", types: { T: 1, F: 0 } }
     ]
   },
   {
     id: 26,
-    title: "外观",
-    question: "你更在意角色的哪个方面？",
+    title: "克制",
+    question: "论剑中三角克制关系，你最擅长？",
     options: [
-      { letter: "A", text: "酷炫的技能特效", types: { N: 1, S: 0 } },
-      { letter: "B", text: "帅气的时装外观", types: { P: 1, J: 0 } },
-      { letter: "C", text: "强力的属性数值", types: { S: 1, N: 0 } },
-      { letter: "D", text: "独特的身份称号", types: { E: 1, I: 0 } }
+      { letter: "A", text: "进攻压制，以攻代守", types: { T: 1, F: 0 } },
+      { letter: "B", text: "卸式反打，后发先至", types: { N: 1, S: 0 } },
+      { letter: "C", text: "闪避拉扯消耗对手", types: { P: 1, J: 0 } },
+      { letter: "D", text: "霸体硬扛，拼伤害", types: { J: 1, P: 0 } }
     ]
   },
   {
     id: 27,
-    title: "江湖路",
-    question: "你希望自己的江湖之路是怎样的？",
+    title: "秘闻",
+    question: "燕云世界流传着诸多秘闻，你最想探寻？",
     options: [
-      { letter: "A", text: "波澜壮阔，轰轰烈烈", types: { E: 1, I: 0 } },
-      { letter: "B", text: "稳扎稳打，步步为营", types: { J: 1, P: 0 } },
-      { letter: "C", text: "神秘低调，暗中观察", types: { I: 1, E: 0 } },
-      { letter: "D", text: "随性洒脱，随遇而安", types: { P: 1, J: 0 } }
+      { letter: "A", text: "燕云十六声的实际下落", types: { N: 1, S: 0 } },
+      { letter: "B", text: "各大门派的隐藏传承", types: { S: 1, N: 0 } },
+      { letter: "C", text: "上古战争的历史真相", types: { T: 1, F: 0 } },
+      { letter: "D", text: "乱世背后的真正推手", types: { N: 1, S: 0 } }
     ]
   },
   {
     id: 28,
-    title: "阵法",
-    question: "你喜欢什么类型的阵法？",
+    title: "结义",
+    question: "江湖结义讲究志同道合，你最看重兄弟的？",
     options: [
-      { letter: "A", text: "攻击阵法，先发制人", types: { T: 1, F: 0 } },
-      { letter: "B", text: "防御阵法，铜墙铁壁", types: { S: 1, N: 0 } },
-      { letter: "C", text: "辅助阵法，攻防兼备", types: { F: 1, T: 0 } },
-      { letter: "D", text: "隐匿阵法，来无影去无踪", types: { P: 1, J: 0 } }
+      { letter: "A", text: "忠诚可靠，义薄云天", types: { F: 1, T: 0 } },
+      { letter: "B", text: "实力强横，并肩作战", types: { T: 1, F: 0 } },
+      { letter: "C", text: "志趣相投，趣味相投", types: { N: 1, S: 0 } },
+      { letter: "D", text: "洒脱不羁，快意恩仇", types: { P: 1, J: 0 } }
     ]
   },
   {
     id: 29,
-    title: "坐骑",
-    question: "你更喜欢哪种类型的坐骑？",
+    title: "身份",
+    question: "燕云有独特的身份系统，你更想成为？",
     options: [
-      { letter: "A", text: "骏马，江湖必备", types: { S: 1, N: 0 } },
-      { letter: "B", text: "仙鹤，飘逸出尘", types: { N: 1, S: 0 } },
-      { letter: "C", text: "猛虎，威风凛凛", types: { T: 1, F: 0 } },
-      { letter: "D", text: "不要坐骑，轻功走天下", types: { P: 1, J: 0 } }
+      { letter: "A", text: "仗剑走天涯的游侠", types: { P: 1, J: 0 } },
+      { letter: "B", text: "统领一方的帮主", types: { T: 1, F: 0 } },
+      { letter: "C", text: "隐居山林的隐士", types: { I: 1, E: 0 } },
+      { letter: "D", text: "揭密真相的调查者", types: { N: 1, S: 0 } }
     ]
   },
   {
     id: 30,
-    title: "独白",
-    question: "如果要用一句话形容自己，你会说？",
+    title: "调平",
+    question: "3v3调平演武模式，你更喜欢？",
     options: [
-      { letter: "A", text: "“我只是想保护身边的人”", types: { F: 1, T: 0 } },
-      { letter: "B", text: "“强大才是唯一的真理”", types: { T: 1, F: 0 } },
-      { letter: "C", text: "“江湖之大，我想去看看”", types: { N: 1, S: 0 } },
-      { letter: "D", text: "“纵情山水，快意人生”", types: { P: 1, J: 0 } }
+      { letter: "A", text: "公平竞技，纯拼技术", types: { J: 1, P: 0 } },
+      { letter: "B", text: "团队配合，战术博弈", types: { E: 1, I: 0 } },
+      { letter: "C", text: "个人实力，展示操作", types: { T: 1, F: 0 } },
+      { letter: "D", text: "混搭流派，出奇制胜", types: { N: 1, S: 0 } }
     ]
   },
   {
     id: 31,
-    title: "结义",
-    question: "你更看重结义兄弟的什么品质？",
+    title: "隐居",
+    question: "若有一天厌倦江湖纷争，你会选择？",
     options: [
-      { letter: "A", text: "忠诚可靠，义薄云天", types: { F: 1, T: 0 } },
-      { letter: "B", text: "武艺高强，并肩作战", types: { T: 1, F: 0 } },
-      { letter: "C", text: "志同道合，趣味相投", types: { N: 1, S: 0 } },
-      { letter: "D", text: "洒脱不羁，随性而为", types: { P: 1, J: 0 } }
+      { letter: "A", text: "归隐山林，躬耕田园", types: { I: 1, E: 0 } },
+      { letter: "B", text: "远赴海外，另寻新天", types: { P: 1, J: 0 } },
+      { letter: "C", text: "继续守护一方平安", types: { F: 1, T: 0 } },
+      { letter: "D", text: "著书立说，传承武学", types: { J: 1, P: 0 } }
     ]
   },
   {
     id: 32,
-    title: "隐居",
-    question: "如果你要隐居，会选择哪里？",
+    title: "骑龙",
+    question: "面对骑龙反打，你会？",
     options: [
-      { letter: "A", text: "世外桃源，与世隔绝", types: { I: 1, E: 0 } },
-      { letter: "B", text: "偏远小镇，宁静祥和", types: { S: 1, N: 0 } },
-      { letter: "C", text: "深山古寺，修身养性", types: { J: 1, P: 0 } },
-      { letter: "D", text: "哪里都不去，江湖就是家", types: { E: 1, I: 0 } }
+      { letter: "A", text: "立刻防御等待时机", types: { J: 1, P: 0 } },
+      { letter: "B", text: "直接闪避拉开距离", types: { P: 1, J: 0 } },
+      { letter: "C", text: "预判落点提前攻击", types: { T: 1, F: 0 } },
+      { letter: "D", text: "骑龙对拼，看谁更狠", types: { N: 1, S: 0 } }
     ]
   },
   {
     id: 33,
-    title: "恩怨",
-    question: "面对仇人，你会？",
+    title: "传闻",
+    question: "江湖传闻你最关注哪类？",
     options: [
-      { letter: "A", text: "君子报仇，十年不晚", types: { J: 1, P: 0 } },
-      { letter: "B", text: "当场了结，不留后患", types: { T: 1, F: 0 } },
-      { letter: "C", text: "放下屠刀，回头是岸", types: { F: 1, T: 0 } },
-      { letter: "D", text: "冤冤相报何时了", types: { N: 1, S: 0 } }
+      { letter: "A", text: "谁又突破了境界", types: { T: 1, F: 0 } },
+      { letter: "B", text: "哪里又出了秘宝", types: { N: 1, S: 0 } },
+      { letter: "C", text: "帮会之间的恩怨情仇", types: { F: 1, T: 0 } },
+      { letter: "D", text: "新赛季的强势流派", types: { S: 1, N: 0 } }
     ]
   },
   {
     id: 34,
-    title: "秘宝",
-    question: "以下哪种秘宝最吸引你？",
+    title: "交易",
+    question: "燕云世界的交易系统丰富，你会？",
     options: [
-      { letter: "A", text: "倚天剑，武林至尊", types: { T: 1, F: 0 } },
-      { letter: "B", text: "九转还魂丹，起死回生", types: { F: 1, T: 0 } },
-      { letter: "C", text: "易筋经，内功绝学", types: { S: 1, N: 0 } },
-      { letter: "D", text: "藏宝图，悬念丛生", types: { N: 1, S: 0 } }
+      { letter: "A", text: "囤积居奇低买高卖", types: { T: 1, F: 0 } },
+      { letter: "B", text: "公平交易童叟无欺", types: { S: 1, N: 0 } },
+      { letter: "C", text: "摆摊交友以物会友", types: { E: 1, I: 0 } },
+      { letter: "D", text: "随机应变随缘交易", types: { P: 1, J: 0 } }
     ]
   },
   {
     id: 35,
-    title: "日常玩法",
-    question: "你更喜欢哪种日常玩法？",
+    title: "传承",
+    question: "若收徒传艺，你最看重弟子的？",
     options: [
-      { letter: "A", text: "帮会战，热血沸腾", types: { E: 1, I: 0 } },
-      { letter: "B", text: "钓鱼烹饪，悠闲自得", types: { S: 1, N: 0 } },
-      { letter: "C", text: "刷副本，挑战极限", types: { J: 1, P: 0 } },
-      { letter: "D", text: "逛论坛，看江湖八卦", types: { N: 1, S: 0 } }
+      { letter: "A", text: "天赋异禀悟性极高", types: { N: 1, S: 0 } },
+      { letter: "B", text: "心性纯良品行端正", types: { F: 1, T: 0 } },
+      { letter: "C", text: "勤奋好学刻苦修炼", types: { J: 1, P: 0 } },
+      { letter: "D", text: "意志坚定百折不挠", types: { T: 1, F: 0 } }
     ]
   },
   {
     id: 36,
-    title: "武学境界",
-    question: "你认为武学的最高境界是？",
+    title: "江湖梦",
+    question: "你的燕云江湖梦是什么？",
     options: [
-      { letter: "A", text: "手中无剑，心中也无剑", types: { N: 1, S: 0 } },
-      { letter: "B", text: "一剑倾心，无敌天下", types: { T: 1, F: 0 } },
-      { letter: "C", text: "以柔克刚，四两拨千斤", types: { P: 1, J: 0 } },
-      { letter: "D", text: "止戈为武，造福江湖", types: { F: 1, T: 0 } }
+      { letter: "A", text: "成为武林第一人", types: { T: 1, F: 0 } },
+      { letter: "B", text: "归隐山林不问江湖", types: { I: 1, E: 0 } },
+      { letter: "C", text: "守护重要的人", types: { F: 1, T: 0 } },
+      { letter: "D", text: "体验所有江湖趣事", types: { P: 1, J: 0 } }
     ]
   },
   {
     id: 37,
-    title: "江湖传闻",
-    question: "哪种江湖传闻最让你感兴趣？",
+    title: "处决",
+    question: "论剑中触发处决后，你习惯？",
     options: [
-      { letter: "A", text: "某派掌门神秘失踪", types: { N: 1, S: 0 } },
-      { letter: "B", text: "珍稀装备现世，各派争夺", types: { T: 1, F: 0 } },
-      { letter: "C", text: "一段凄美的江湖爱情故事", types: { F: 1, T: 0 } },
-      { letter: "D", text: "新副本开放，奖励丰厚", types: { S: 1, N: 0 } }
+      { letter: "A", text: "立刻吐火压起身", types: { T: 1, F: 0 } },
+      { letter: "B", text: "喝酒预输入接连招", types: { N: 1, S: 0 } },
+      { letter: "C", text: "稳扎稳打等对手失误", types: { J: 1, P: 0 } },
+      { letter: "D", text: "处决后拉开距离", types: { P: 1, J: 0 } }
     ]
   },
   {
     id: 38,
-    title: "待人",
-    question: "你更欣赏哪种待人之道？",
+    title: "寒千秋",
+    question: "寒千秋在燕云中是传奇人物，你如何看待？",
     options: [
-      { letter: "A", text: "坦诚相待，以心换心", types: { F: 1, T: 0 } },
-      { letter: "B", text: "敬而远之，保持距离", types: { I: 1, E: 0 } },
-      { letter: "C", text: "因人而异，灵活变通", types: { P: 1, J: 0 } },
-      { letter: "D", text: "礼尚往来，不卑不亢", types: { J: 1, P: 0 } }
+      { letter: "A", text: "刺客之王，令人敬畏", types: { T: 1, F: 0 } },
+      { letter: "B", text: "亦敌亦友的复杂存在", types: { N: 1, S: 0 } },
+      { letter: "C", text: "可望而不可及的传说", types: { I: 1, E: 0 } },
+      { letter: "D", text: "与我无关的局外势力", types: { P: 1, J: 0 } }
     ]
   },
   {
     id: 39,
-    title: "历练",
-    question: "你更倾向于体验哪种玩法？",
+    title: "少林",
+    question: "少林寺在燕云中地位特殊，你怎么看？",
     options: [
-      { letter: "A", text: "剧情任务，了解江湖秘闻", types: { N: 1, S: 0 } },
-      { letter: "B", text: "竞技对战，证明实力", types: { T: 1, F: 0 } },
-      { letter: "C", text: "休闲玩法，放松心情", types: { S: 1, N: 0 } },
-      { letter: "D", text: "团队副本，配合默契", types: { E: 1, I: 0 } }
+      { letter: "A", text: "武林正宗心向往之", types: { J: 1, P: 0 } },
+      { letter: "B", text: "传统束缚不以为然", types: { P: 1, J: 0 } },
+      { letter: "C", text: "中立势力可以合作", types: { N: 1, S: 0 } },
+      { letter: "D", text: "实力强劲值得研究", types: { T: 1, F: 0 } }
     ]
   },
   {
     id: 40,
-    title: "江湖梦",
-    question: "你的江湖梦是什么？",
+    title: "武林",
+    question: "燕云世界风起云涌，你认为武林的未来是？",
     options: [
-      { letter: "A", text: "成为一代宗师，开宗立派", types: { T: 1, F: 0 } },
-      { letter: "B", text: "归隐山林，不问世事", types: { I: 1, E: 0 } },
-      { letter: "C", text: "走遍天涯，阅尽人间风景", types: { N: 1, S: 0 } },
-      { letter: "D", text: "守护一方平安，受人敬仰", types: { F: 1, T: 0 } }
+      { letter: "A", text: "群雄割据各自为战", types: { P: 1, J: 0 } },
+      { letter: "B", text: "统一于强大势力之下", types: { T: 1, F: 0 } },
+      { letter: "C", text: "正邪两道势均力敌", types: { N: 1, S: 0 } },
+      { letter: "D", text: "各派和平共处共荣", types: { F: 1, T: 0 } }
     ]
   },
   {
     id: 41,
-    title: "对决",
-    question: "面对实力相当的对手，你会？",
+    title: "独白",
+    question: "如果用一句话形容自己，你会说？",
     options: [
-      { letter: "A", text: "全力以赴，胜负在此一举", types: { T: 1, F: 0 } },
-      { letter: "B", text: "沉着冷静，寻找破绽", types: { J: 1, P: 0 } },
-      { letter: "C", text: "享受过程，输赢其次", types: { P: 1, J: 0 } },
-      { letter: "D", text: "邀人相助，以多胜少", types: { E: 1, I: 0 } }
+      { letter: "A", text: "我只想守护身边的人", types: { F: 1, T: 0 } },
+      { letter: "B", text: "天下武功唯快不破", types: { T: 1, F: 0 } },
+      { letter: "C", text: "江湖之大无处不可去", types: { P: 1, J: 0 } },
+      { letter: "D", text: "真相只有一个", types: { N: 1, S: 0 } }
     ]
   },
   {
     id: 42,
-    title: "秘闻",
-    question: "你更关注游戏中的什么内容？",
+    title: "江湖路",
+    question: "回顾自己的燕云江湖路，你更认可？",
     options: [
-      { letter: "A", text: "版本更新，新玩法体验", types: { N: 1, S: 0 } },
-      { letter: "B", text: "平衡调整，策略研究", types: { J: 1, P: 0 } },
-      { letter: "C", text: "社交互动，结识好友", types: { E: 1, I: 0 } },
-      { letter: "D", text: "角色培养，数值提升", types: { S: 1, N: 0 } }
+      { letter: "A", text: "波澜壮阔轰轰烈烈", types: { E: 1, I: 0 } },
+      { letter: "B", text: "稳扎稳打步步为营", types: { J: 1, P: 0 } },
+      { letter: "C", text: "神秘低调暗中观察", types: { I: 1, E: 0 } },
+      { letter: "D", text: "随性洒脱随遇而安", types: { P: 1, J: 0 } }
     ]
   },
   {
     id: 43,
-    title: "师徒",
-    question: "你更愿意收什么样的徒弟？",
+    title: "好友",
+    question: "在燕云中交到知心好友是种什么体验？",
     options: [
-      { letter: "A", text: "天赋异禀，一学就会", types: { T: 1, F: 0 } },
-      { letter: "B", text: "勤奋好学，踏实肯干", types: { S: 1, N: 0 } },
-      { letter: "C", text: "乖巧听话，唯命是从", types: { J: 1, P: 0 } },
-      { letter: "D", text: "放荡不羁，独具一格", types: { N: 1, S: 0 } }
+      { letter: "A", text: "仗剑并肩闯荡天下", types: { E: 1, I: 0 } },
+      { letter: "B", text: "深夜长谈人生理想", types: { F: 1, T: 0 } },
+      { letter: "C", text: "切磋武艺共同进步", types: { T: 1, F: 0 } },
+      { letter: "D", text: "君子之交淡如水", types: { I: 1, E: 0 } }
     ]
   },
   {
     id: 44,
-    title: "游历",
-    question: "你更喜欢在游戏里哪里发呆？",
+    title: "落幕",
+    question: "当你即将离开燕云世界时，你会？",
     options: [
-      { letter: "A", text: "主城广场，看人来人往", types: { E: 1, I: 0 } },
-      { letter: "B", text: "高山之巅，望尽天涯路", types: { N: 1, S: 0 } },
-      { letter: "C", text: "小溪边，静静垂钓", types: { I: 1, E: 0 } },
-      { letter: "D", text: "战场遗迹，感受沧桑", types: { S: 1, N: 0 } }
+      { letter: "A", text: "与好友一一告别", types: { F: 1, T: 0 } },
+      { letter: "B", text: "默默下线不留痕迹", types: { I: 1, E: 0 } },
+      { letter: "C", text: "最后一次纵情江湖", types: { P: 1, J: 0 } },
+      { letter: "D", text: "写下江湖感悟留念", types: { N: 1, S: 0 } }
     ]
   },
   {
     id: 45,
-    title: "义举",
-    question: "看到新手被欺负，你会？",
+    title: "终章",
+    question: "若有一天燕云停服，你最舍不得的是？",
     options: [
-      { letter: "A", text: "路见不平，拔刀相助", types: { F: 1, T: 0 } },
-      { letter: "B", text: "组队保护，帮他们练级", types: { E: 1, I: 0 } },
-      { letter: "C", text: "在世界频道谴责", types: { N: 1, S: 0 } },
-      { letter: "D", text: "漠不关心，各凭本事", types: { T: 1, F: 0 } }
+      { letter: "A", text: "一起并肩作战的兄弟", types: { F: 1, T: 0 } },
+      { letter: "B", text: "在游戏中经历的点点滴滴", types: { N: 1, S: 0 } },
+      { letter: "C", text: "那个曾经奋斗过的自己", types: { T: 1, F: 0 } },
+      { letter: "D", text: "江湖中所有的传说故事", types: { P: 1, J: 0 } }
     ]
   },
   {
     id: 46,
-    title: "江湖规矩",
-    question: "你认为江湖最重要的是什么？",
+    title: "醉花阴",
+    question: "醉花阴是开封最大的舞榭歌台，你会？",
     options: [
-      { letter: "A", text: "义气，兄弟情谊大过天", types: { F: 1, T: 0 } },
-      { letter: "B", text: "实力，强者为尊", types: { T: 1, F: 0 } },
-      { letter: "C", text: "规矩，无规矩不成方圆", types: { J: 1, P: 0 } },
-      { letter: "D", text: "自由，快意恩仇", types: { P: 1, J: 0 } }
+      { letter: "A", text: "参加群英会，一展风采", types: { E: 1, I: 0 } },
+      { letter: "B", text: "在角落观察江湖百态", types: { I: 1, E: 0 } },
+      { letter: "C", text: "打听各方情报消息", types: { N: 1, S: 0 } },
+      { letter: "D", text: "欣赏歌舞，不问世事", types: { P: 1, J: 0 } }
     ]
   },
   {
     id: 47,
-    title: "终极目标",
-    question: "你在游戏中的终极目标是什么？",
+    title: "清河",
+    question: "清河是燕云的重要区域，你对其印象是？",
     options: [
-      { letter: "A", text: "全服第一，独孤求败", types: { T: 1, F: 0 } },
-      { letter: "B", text: "集齐所有时装和成就", types: { N: 1, S: 0 } },
-      { letter: "C", text: "找到一群志同道合的伙伴", types: { E: 1, I: 0 } },
-      { letter: "D", text: "体验所有玩法，不留遗憾", types: { P: 1, J: 0 } }
+      { letter: "A", text: "风景优美，适合探索", types: { N: 1, S: 0 } },
+      { letter: "B", text: "资源丰富，适合发育", types: { S: 1, N: 0 } },
+      { letter: "C", text: "地广人稀，容易迷路", types: { P: 1, J: 0 } },
+      { letter: "D", text: "暗藏玄机，机遇无限", types: { T: 1, F: 0 } }
     ]
   },
   {
     id: 48,
-    title: "江湖路远",
-    question: "你觉得自己在江湖中是哪种人？",
+    title: "主线",
+    question: "燕云十六声的主线剧情充满悬念，你更关注？",
     options: [
-      { letter: "A", text: "意气风发的少年侠客", types: { E: 1, I: 0 } },
-      { letter: "B", text: "深藏不露的世外高人", types: { I: 1, E: 0 } },
-      { letter: "C", text: "玩世不恭的江湖浪子", types: { P: 1, J: 0 } },
-      { letter: "D", text: "稳健持重的江湖老手", types: { J: 1, P: 0 } }
+      { letter: "A", text: "各方势力的兴衰存亡", types: { T: 1, F: 0 } },
+      { letter: "B", text: "主线NPC的爱恨情仇", types: { F: 1, T: 0 } },
+      { letter: "C", text: "隐藏的江湖秘闻", types: { N: 1, S: 0 } },
+      { letter: "D", text: "自身武学的提升历程", types: { S: 1, N: 0 } }
     ]
   },
   {
     id: 49,
-    title: "终极秘术",
-    question: "如果可以拥有一种江湖秘术，你想要？",
+    title: "门派",
+    question: "燕云中无门无派可自选武学，你会？",
     options: [
-      { letter: "A", text: "长生不老，永驻江湖", types: { S: 1, N: 0 } },
-      { letter: "B", text: "穿梭时空，预知未来", types: { N: 1, S: 0 } },
-      { letter: "C", text: "变身易容，随心所欲", types: { P: 1, J: 0 } },
-      { letter: "D", text: "心灵控制，一呼百应", types: { E: 1, I: 0 } }
+      { letter: "A", text: "偷师百家，融会贯通", types: { N: 1, S: 0 } },
+      { letter: "B", text: "专精一流，登峰造极", types: { J: 1, P: 0 } },
+      { letter: "C", text: "不拘一格，随心所欲", types: { P: 1, J: 0 } },
+      { letter: "D", text: "看版本强势，版本至上", types: { T: 1, F: 0 } }
     ]
   },
   {
     id: 50,
-    title: "江湖尾声",
-    question: "当你离开江湖时，你希望被如何铭记？",
+    title: "止戈",
+    question: "你玩止戈论剑的主要目的是？",
     options: [
-      { letter: "A", text: "“他虽已远去，传说永流传”", types: { N: 1, S: 0 } },
-      { letter: "B", text: "“江湖再无此人”", types: { I: 1, E: 0 } },
-      { letter: "C", text: "“他留下了无数传奇故事”", types: { E: 1, I: 0 } },
-      { letter: "D", text: "“来过，活过，爱过”", types: { F: 1, T: 0 } }
+      { letter: "A", text: "证明实力，冲击段位", types: { T: 1, F: 0 } },
+      { letter: "B", text: "结交朋友，组队娱乐", types: { E: 1, I: 0 } },
+      { letter: "C", text: "研究打法，提升技术", types: { N: 1, S: 0 } },
+      { letter: "D", text: "体验武侠战斗的乐趣", types: { P: 1, J: 0 } }
     ]
   }
 ]
-
 export const personalities = {
   "INTJ": {
-    name: "剑魔",
-    title: "孤独的剑魔",
-    description: "你如同江湖中传说中的剑魔，独来独往，剑术通神。你不屑于世俗的纷争，只追求武道的极致。孤独是你的常态，但正是这份孤独，让你能够心无旁骛地修炼，终成一代宗师。",
+    name: "寒渊",
+    title: "寒渊剑主",
+    description: "你如同燕云中传说中的寒渊剑主，独来独往，剑术通神。你不屑于世俗的纷争，只追求武道的极致。孤独是你的常态，但正是这份孤独，让你能够心无旁骛地修炼，终成一代宗师。",
     traits: ["独立", "理性", "追求极致", "深藏不露"],
-    match: "适合门派：纯阳宗、剑宗"
+    match: "适合：剑法、刀法"
   },
   "INTP": {
-    name: "智者",
-    title: "隐世智者",
-    description: "你如同江湖中的隐世智者，通晓天下武学，却从不轻易出手。你喜欢思考和研究，将武学融会贯通，形成自己独特的体系。虽然不善交际，但你的智慧让人敬佩。",
+    name: "天机",
+    title: "天机居士",
+    description: "你如同燕云中的天机居士，通晓天下武学，却从不轻易出手。你喜欢思考和研究，将武学融会贯通，形成自己独特的体系。虽然不善交际，但你的智慧让人敬佩。",
     traits: ["睿智", "思考者", "创新", "内敛"],
-    match: "适合门派：逍遥派、学术界"
+    match: "适合：长兵、奇术"
   },
   "ENTJ": {
-    name: "盟主",
-    title: "一代盟主",
-    description: "你如同江湖中的一代盟主，天生具有领袖气质。你有远见卓识，能够统筹全局，让各路英雄为你效命。在你的带领下，帮会必将威震江湖，成就一番霸业。",
+    name: "执棋",
+    title: "执棋之人",
+    description: "你如同燕云中的执棋之人，天生具有领袖气质。你有远见卓识，能够统筹全局，让各路英雄为你效命。在你的带领下，帮会必将威震武林，成就一番霸业。",
     traits: ["领导力", "决断力", "自信", "战略家"],
-    match: "适合门派：明教、天机阁"
+    match: "适合：刀、长兵"
   },
   "ENTP": {
-    name: "逍遥子",
-    title: "逍遥游侠",
-    description: "你如同江湖中的逍遥游侠，机智幽默，随性洒脱。你不拘泥于传统，喜欢创新和变化。总能在危机中找到转机，用智慧而非蛮力解决问题。",
+    name: "逍遥",
+    title: "逍遥散仙",
+    description: "你如同燕云中的逍遥散仙，机智幽默，随性洒脱。你不拘泥于传统，喜欢创新和变化。总能在危机中找到转机，用智慧而非蛮力解决问题。",
     traits: ["机智", "创新", "善变", "魅力"],
-    match: "适合门派：逍遥派、日月教"
+    match: "适合：暗器、奇术"
   },
   "INFJ": {
-    name: "圣者",
-    title: "济世圣者",
-    description: "你如同江湖中的济世圣者，心怀慈悲，想要拯救天下苍生。你有着崇高的理想和坚定的信念，愿意为了正义付出一切。你的存在让江湖多了一份温暖。",
+    name: "清风",
+    title: "清风使者",
+    description: "你如同燕云中的清风使者，心怀慈悲，想要拯救天下苍生。你有着崇高的理想和坚定的信念，愿意为了正义付出一切。你的存在让江湖多了一份温暖。",
     traits: ["理想主义", "同理心", "洞察", "奉献"],
-    match: "适合门派：少林寺、普陀山"
+    match: "适合：长兵、辅助心法"
   },
   "INFP": {
-    name: "诗人",
-    title: "江湖诗人",
-    description: "你如同江湖中的浪漫诗人，追求内心的自由与真实。你有着丰富的情感和独特的审美，在刀光剑影中保持着那份诗情画意。你的故事，将成为江湖中最美的传说。",
+    name: "惊鸿",
+    title: "惊鸿游侠",
+    description: "你如同燕云中的惊鸿游侠，追求内心的自由与真实。你有着丰富的情感和独特的审美，在刀光剑影中保持着那份诗情画意。你的故事，将成为江湖中最美的传说。",
     traits: ["浪漫", "理想主义", "真诚", "艺术气质"],
-    match: "适合门派：移花宫、琴宗"
+    match: "适合：剑法、轻功"
   },
   "ENFJ": {
-    name: "教主",
-    title: "一代教主",
-    description: "你如同江湖中魅力四射的一代教主，能够感召人心，让众人追随。你的言辞如同春风化雨，能够化解仇恨，凝聚人心。在你的领导下，江湖必将迎来和平。",
+    name: "执印",
+    title: "执印之主",
+    description: "你如同燕云中的执印之主，能够感召人心，让众人追随。你的言辞如同春风化雨，能够化解仇恨，凝聚人心。在你的领导下，江湖必将迎来和平。",
     traits: ["魅力", "感染力", "理想主义", "领导力"],
-    match: "适合门派：明教、圣火教"
+    match: "适合：刀、辅助心法"
   },
   "ENFP": {
-    name: "浪子",
-    title: "江湖浪子",
-    description: "你如同江湖中潇洒的浪子，自由自在，无拘无束。你喜欢结交各路朋友，经历各种奇遇。你的生活充满了惊喜和欢乐，是江湖中最靓丽的风景线。",
+    name: "浮游",
+    title: "浮游浪子",
+    description: "你如同燕云中的浮游浪子，自由自在，无拘无束。你喜欢结交各路朋友，经历各种奇遇。你的生活充满了惊喜和欢乐，是江湖中最靓丽的风景线。",
     traits: ["热情", "自由", "创意", "社交"],
-    match: "适合门派：丐帮、散人"
+    match: "适合：双镖、随意搭配"
   },
   "ISTJ": {
-    name: "掌门",
-    title: "严谨掌门",
-    description: "你如同江湖中严谨踏实的掌门，注重规矩和传承。你信守承诺，一丝不苟，是帮会最可靠的中坚力量。稳扎稳打的风格，让你能够基业长青。",
+    name: "磐石",
+    title: "磐石之人",
+    description: "你如同燕云中的磐石之人，注重规矩和传承。你信守承诺，一丝不苟，是帮会最可靠的中坚力量。稳扎稳打的风格，让你能够基业长青。",
     traits: ["可靠", "务实", "负责", "传统"],
-    match: "适合门派：少林寺、武当派"
+    match: "适合：韦陀、正法"
   },
   "ISFJ": {
-    name: "守护者",
-    title: "温情守护者",
-    description: "你如同江湖中温情默默守护者，照顾着身边的每一个人。你不善言辞，却用行动表达着关爱。是你让江湖中的刀光剑影多了一份温情。",
+    name: "暖阳",
+    title: "暖阳守护",
+    description: "你如同燕云中的暖阳守护，照顾着身边的每一个人。你不善言辞，却用行动表达着关爱。是你让江湖中的刀光剑影多了一份温情。",
     traits: ["忠诚", "包容", "温暖", "奉献"],
-    match: "适合门派：峨眉派、医仙谷"
+    match: "适合：辅助心法、治疗"
   },
   "ESTJ": {
-    name: "帮主",
-    title: "铁血帮主",
-    description: "你如同江湖中雷厉风行的帮主，讲究效率和结果。你是帮会的顶梁柱，制定规矩并严格执行。在你的管理下，帮会井井有条，蒸蒸日上。",
+    name: "铁壁",
+    title: "铁壁将军",
+    description: "你如同燕云中的铁壁将军，讲究效率和结果。你是帮会的顶梁柱，制定规矩并严格执行。在你的管理下，帮会井井有条，蒸蒸日上。",
     traits: ["执行", "果断", "管理", "务实"],
-    match: "适合门派：天地会、五岳剑派"
+    match: "适合：霸体、防御型"
   },
   "ESFJ": {
-    name: "仁者",
-    title: "暖心仁者",
-    description: "你如同江湖中温暖如阳的仁者，深受众人爱戴。你善于照顾他人的感受，是帮会中的润滑剂。有你在的地方，就充满了欢笑和温暖。",
+    name: "春风",
+    title: "春风仁者",
+    description: "你如同燕云中温暖如阳的春风仁者，深受众人爱戴。你善于照顾他人的感受，是帮会中的润滑剂。有你在的地方，就充满了欢笑和温暖。",
     traits: ["热情", "善解人意", "社交", "责任感"],
-    match: "适合门派：峨眉派、百花谷"
+    match: "适合：团队配合、辅助"
   },
   "ISTP": {
-    name: "刺客",
-    title: "冷血刺客",
-    description: "你如同江湖中神秘的冷血刺客，沉默寡言，却一击必杀。你追求简洁和效率，不喜欢废话。你的刀，是江湖中最可怕的噩梦。",
+    name: "暗夜",
+    title: "暗夜游魂",
+    description: "你如同燕云中的暗夜游魂，沉默寡言，却一击必杀。你追求简洁和效率，不喜欢废话。你的刀，是江湖中最可怕的噩梦。",
     traits: ["冷静", "分析", "实用", "独立"],
-    match: "适合门派：唐门、刺客联盟"
+    match: "适合：刺客流、暗器"
   },
   "ISFP": {
-    name: "侠客",
-    title: "自由侠客",
-    description: "你如同江湖中追求自由的侠客，淡泊名利，只做自己喜欢的事。你的剑术优美而实用，你的生活方式让无数人向往。",
+    name: "流云",
+    title: "流云剑客",
+    description: "你如同燕云中追求自由的流云剑客，淡泊名利，只做自己喜欢的事。你的剑术优美而实用，你的生活方式让无数人向往。",
     traits: ["随性", "艺术", "谦逊", "自由"],
-    match: "适合门派：华山剑宗、逍遥派"
+    match: "适合：剑法、轻功"
   },
   "ESTP": {
-    name: "豪杰",
-    title: "江湖豪杰",
-    description: "你如同江湖中热血豪迈的豪杰，敢爱敢恨，快意恩仇。你喜欢冒险和挑战，是天生的行动派。在你的身上，体现了江湖最原始的热血与激情。",
+    name: "烈焰",
+    title: "烈焰豪杰",
+    description: "你如同燕云中热血豪迈的烈焰豪杰，敢爱敢恨，快意恩仇。你喜欢冒险和挑战，是天生的行动派。在你的身上，体现了江湖最原始的热血与激情。",
     traits: ["行动力", "现实", "灵活", "魄力"],
-    match: "适合门派：明教、丐帮"
+    match: "适合：破竹鸢、吐火流"
   },
   "ESFP": {
-    name: "乐侠",
-    title: "欢乐乐侠",
-    description: "你如同江湖中天生乐观的乐侠，给周围的人带来无限欢乐。你喜欢热闹和社交，是帮会的气氛担当。有你在的地方，永远不会无聊。",
+    name: "醉梦",
+    title: "醉梦狂歌",
+    description: "你如同燕云中的醉梦狂歌，给周围的人带来无限欢乐。你喜欢热闹和社交，是帮会的气氛担当。有你在的地方，永远不会无聊。",
     traits: ["乐观", "热情", "表演", "即兴"],
-    match: "适合门派：日月教、五毒教"
+    match: "适合：醉拳、太白醉月"
   }
 }
