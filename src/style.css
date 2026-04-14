@@ -1,4 +1,5 @@
 :root {
+  /* 色彩系统 */
   --primary: #8B7355;
   --secondary: #D4C4B0;
   --accent: #C9A86C;
@@ -7,8 +8,45 @@
   --text: #3D3225;
   --border: #A69580;
   --shadow: rgba(44, 36, 22, 0.3);
+  
+  /* 金色系色彩层次 */
   --gold: #C9A86C;
+  --gold-light: #E0C88C;
+  --gold-dark: #A68A4A;
+  --gold-darker: #7D6A3A;
+  --gold-lightest: #F0E4C8;
+  
+  /* 其他色彩 */
   --red: #8B4513;
+  
+  /* 间距系统 */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  
+  /* 动画系统 */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* 字体大小系统 */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+  
+  /* 容器宽度 */
+  --container-max-width: 800px;
+  --container-padding: var(--space-lg);
 }
 
 * {
@@ -19,10 +57,14 @@
 
 body {
   font-family: 'Noto Serif SC', 'SimSun', serif;
-  background: linear-gradient(135deg, #1a1510 0%, #2c2416 50%, #1a1510 100%);
+  background: 
+    linear-gradient(135deg, #1a1510 0%, #2c2416 40%, #3d3225 60%, #1a1510 100%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 1000 1000' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='inkFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.01' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.05 0 0 0 0.3 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23inkFilter)'/%3E%3C/svg%3E");
   min-height: 100vh;
   color: var(--light);
   overflow-x: hidden;
+  font-size: var(--text-base);
+  line-height: 1.6;
 }
 
 #app {
@@ -36,8 +78,11 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: var(--container-padding);
   position: relative;
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
 }
 
 .page-container::before {
@@ -52,6 +97,55 @@ body {
     url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   opacity: 0.15;
   pointer-events: none;
+}
+
+/* 响应式字体大小 */
+@media (max-width: 768px) {
+  :root {
+    --text-6xl: 2.5rem;
+    --text-5xl: 2rem;
+    --text-4xl: 1.75rem;
+    --text-3xl: 1.5rem;
+    --text-2xl: 1.25rem;
+    --text-xl: 1.125rem;
+    --container-max-width: 95vw;
+  }
+  
+  .page-container {
+    padding: var(--space-md);
+  }
+  
+  .content-wrapper {
+    padding: 0 var(--space-sm);
+  }
+}
+
+/* 小屏幕设备 */
+@media (max-width: 480px) {
+  :root {
+    --text-6xl: 2rem;
+    --text-5xl: 1.75rem;
+    --text-4xl: 1.5rem;
+    --text-3xl: 1.25rem;
+    --text-2xl: 1.125rem;
+  }
+  
+  .page-container {
+    padding: var(--space-sm);
+  }
+  
+  .btn-primary {
+    padding: var(--space-sm) var(--space-lg);
+    font-size: var(--text-base);
+  }
+  
+  .option-inner {
+    padding: var(--space-md);
+  }
+  
+  .result-content {
+    padding: var(--space-lg) var(--space-md);
+  }
 }
 
 .title-decoration {

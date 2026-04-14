@@ -33,7 +33,11 @@ const personalityType = computed(() => {
   type += scores.T >= scores.F ? 'T' : 'F'
   type += scores.J >= scores.P ? 'J' : 'P'
 
-  return personalities[type] || personalities['INTJ']
+  const personality = personalities[type] || personalities['INTJ']
+  return {
+    ...personality,
+    type
+  }
 })
 const selectOption = (letter, index) => {
   if (optionVisible.value.includes(letter)) return
@@ -91,7 +95,19 @@ onMounted(() => {
 <template>
   <div class="page-container">
     <div class="particles">
-      <div class="particle" v-for="i in 20" :key="i" :style="{ '--delay': i * 0.5 + 's', '--x': Math.random() * 100 + '%', '--duration': 10 + Math.random() * 10 + 's' }"></div>
+      <div 
+        v-for="i in 30" 
+        :key="i" 
+        class="particle" 
+        :class="['small', 'medium', 'large'][Math.floor(Math.random() * 3)]"
+        :style="{
+          '--delay': i * 0.3 + 's', 
+          '--x': Math.random() * 100 + '%', 
+          '--duration': 8 + Math.random() * 12 + 's',
+          '--offset': (Math.random() - 0.5) * 200,
+          '--particle-opacity': 0.3 + Math.random() * 0.5
+        }"
+      ></div>
     </div>
 
     <Transition name="phase" mode="out-in">
@@ -198,7 +214,10 @@ onMounted(() => {
           <div class="result-content">
             <div class="result-type-wrapper">
               <div class="result-glow"></div>
-              <div class="result-type">{{ personalityType.name }}</div>
+              <div class="result-type">
+                <span class="type-chinese">{{ personalityType.name }}</span>
+                <span class="type-english">{{ personalityType.type }}</span>
+              </div>
             </div>
             <h3 class="result-title">{{ personalityType.title }}</h3>
 
@@ -245,8 +264,9 @@ onMounted(() => {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 600px;
+  max-width: var(--container-max-width);
   margin: 0 auto;
+  padding: 0 var(--space-md);
 }
 
 .particles {
@@ -262,29 +282,51 @@ onMounted(() => {
 
 .particle {
   position: absolute;
-  width: 4px;
-  height: 4px;
-  background: var(--gold);
   border-radius: 50%;
   opacity: 0;
   left: var(--x);
   animation: float var(--duration) ease-in-out infinite;
   animation-delay: var(--delay);
+  box-shadow: 0 0 10px var(--gold-light);
+}
+
+.particle.small {
+  width: 2px;
+  height: 2px;
+  background: var(--gold-light);
+  opacity: 0.4;
+}
+
+.particle.medium {
+  width: 4px;
+  height: 4px;
+  background: var(--gold);
+  opacity: 0.6;
+}
+
+.particle.large {
+  width: 6px;
+  height: 6px;
+  background: var(--gold-lightest);
+  opacity: 0.8;
 }
 
 @keyframes float {
   0% {
-    transform: translateY(100vh) scale(0);
+    transform: translateY(100vh) scale(0) translateX(0) rotate(0deg);
     opacity: 0;
   }
   10% {
-    opacity: 0.6;
+    opacity: var(--particle-opacity, 0.6);
+  }
+  50% {
+    transform: translateY(50vh) scale(1) translateX(calc(var(--offset, 0) * 1px)) rotate(180deg);
   }
   90% {
-    opacity: 0.6;
+    opacity: var(--particle-opacity, 0.6);
   }
   100% {
-    transform: translateY(-100px) scale(1);
+    transform: translateY(-100px) scale(1) translateX(0) rotate(360deg);
     opacity: 0;
   }
 }
@@ -324,7 +366,7 @@ onMounted(() => {
 }
 
 .title-text {
-  font-size: 3.5rem;
+  font-size: var(--text-5xl);
   font-weight: 700;
   color: var(--gold);
   letter-spacing: 0.5rem;
@@ -332,6 +374,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   gap: 0.1rem;
+  font-family: 'Ma Shan Zheng', 'Noto Serif SC', 'SimSun', serif;
 }
 
 .title-text span {
@@ -487,8 +530,8 @@ onMounted(() => {
   background: linear-gradient(135deg, var(--dark) 0%, #3d3225 100%);
   border: 2px solid var(--gold);
   color: var(--gold);
-  padding: 1rem 3rem;
-  font-size: 1.2rem;
+  padding: var(--space-md) var(--space-xl);
+  font-size: var(--text-lg);
   font-family: inherit;
   cursor: pointer;
   position: relative;
@@ -496,7 +539,9 @@ onMounted(() => {
   letter-spacing: 0.3rem;
   opacity: 0;
   animation: fade-in 0.5s ease forwards 1.3s;
-  transition: all 0.3s ease;
+  transition: all var(--transition-normal);
+  border-radius: 2px;
+  will-change: transform, box-shadow;
 }
 
 .btn-primary::before {
@@ -507,7 +552,7 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(201, 168, 108, 0.3), transparent);
-  transition: left 0.5s ease;
+  transition: left var(--transition-slow);
 }
 
 .btn-primary:hover::before {
@@ -522,6 +567,13 @@ onMounted(() => {
   transform: translateY(-3px);
 }
 
+.btn-primary:active {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 20px rgba(201, 168, 108, 0.3),
+    inset 0 0 20px rgba(201, 168, 108, 0.05);
+}
+
 .btn-text {
   position: relative;
   z-index: 1;
@@ -530,9 +582,9 @@ onMounted(() => {
 .btn-icon {
   position: relative;
   z-index: 1;
-  margin-left: 0.5rem;
+  margin-left: var(--space-sm);
   display: inline-block;
-  transition: transform 0.3s ease;
+  transition: transform var(--transition-normal);
 }
 
 .btn-primary:hover .btn-icon {
@@ -557,17 +609,17 @@ onMounted(() => {
 
 .phase-enter-active,
 .phase-leave-active {
-  transition: all 0.4s ease;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .phase-enter-from {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(30px) scale(0.95);
 }
 
 .phase-leave-to {
   opacity: 0;
-  transform: translateY(-20px);
+  transform: translateY(-20px) scale(0.95);
 }
 
 .test-phase {
@@ -682,11 +734,12 @@ onMounted(() => {
   overflow: hidden;
   opacity: 0;
   transform: translateX(-20px);
-  transition: all 0.3s ease;
+  transition: all var(--transition-normal);
+  will-change: transform, box-shadow, border-color;
 }
 
 .option-card.option-visible {
-  animation: option-appear 0.4s ease forwards;
+  animation: option-appear 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .option-card:nth-child(1) { animation-delay: 0.1s; }
@@ -710,7 +763,7 @@ onMounted(() => {
   height: 100%;
   background: var(--gold);
   transform: scaleY(0);
-  transition: transform 0.3s ease;
+  transition: transform var(--transition-normal);
 }
 
 .option-card:hover {
@@ -729,10 +782,23 @@ onMounted(() => {
   border-color: var(--gold);
   background: linear-gradient(135deg, rgba(61, 50, 37, 0.95) 0%, rgba(44, 36, 22, 0.95) 100%);
   pointer-events: none;
+  animation: option-selected 0.3s ease forwards;
 }
 
 .option-card.option-selected::before {
   transform: scaleY(1);
+}
+
+@keyframes option-selected {
+  0% {
+    transform: translateX(10px) scale(1);
+  }
+  50% {
+    transform: translateX(10px) scale(1.02);
+  }
+  100% {
+    transform: translateX(10px) scale(1);
+  }
 }
 
 .option-inner {
@@ -853,7 +919,7 @@ onMounted(() => {
 }
 
 .result-type {
-  font-size: 3rem;
+  font-size: var(--text-5xl);
   color: var(--gold);
   font-weight: bold;
   letter-spacing: 0.5rem;
@@ -862,6 +928,26 @@ onMounted(() => {
   text-shadow:
     0 0 20px rgba(201, 168, 108, 0.8),
     0 0 40px rgba(201, 168, 108, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.type-chinese {
+  font-family: 'Ma Shan Zheng', 'Noto Serif SC', 'SimSun', serif;
+}
+
+.type-english {
+  font-size: var(--text-2xl);
+  font-family: 'Noto Serif SC', serif;
+  opacity: 0.9;
+  letter-spacing: 0.3rem;
+  text-shadow:
+    0 0 10px rgba(201, 168, 108, 0.6),
+    0 0 20px rgba(201, 168, 108, 0.3);
+  animation: type-english-appear 1s ease forwards 0.5s;
+  opacity: 0;
 }
 
 @keyframes result-appear {
@@ -877,6 +963,17 @@ onMounted(() => {
     opacity: 1;
     transform: scale(1);
     letter-spacing: 0.5rem;
+  }
+}
+
+@keyframes type-english-appear {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+  100% {
+    opacity: 0.9;
+    transform: translateY(0) scale(1);
   }
 }
 
