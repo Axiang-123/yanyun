@@ -335,17 +335,14 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="page-container" :class="{ 'performance-mode': isPerformanceMode }">
-    <div style="width:100%;text-align:right;padding:18px 0 0 0;z-index:10;position:relative;">
-      <a
-        href="https://axiang-123.github.io/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn-secondary"
-        style="display:inline-block;padding:6px 18px;margin:0 18px 0 0;text-decoration:none;"
-      >
-        查看博客地址
-      </a>
-    </div>
+    <a
+      href="https://axiang-123.github.io/"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="floating-blog-btn"
+    >
+      查看博客
+    </a>
     <div class="particles">
       <div 
         v-for="i in particleCount" 
@@ -569,6 +566,51 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
+/* 悬浮博客按钮样式 */
+.floating-blog-btn {
+  position: fixed;
+  right: 28px;
+  bottom: 32px;
+  z-index: 1002;
+  background: rgba(245, 241, 234, 0.92);
+  border: 1.5px solid #bfa76a;
+  color: #7d6a3a;
+  padding: 0.7rem 1.5rem;
+  font-size: 1.08rem;
+  border-radius: 24px;
+  box-shadow: 0 4px 18px rgba(201,168,108,0.13);
+  text-decoration: none;
+  transition: all 0.22s cubic-bezier(.4,1.3,.6,1);
+  font-weight: 600;
+}
+.floating-blog-btn:hover {
+  background: #fffbe9;
+  color: #bfa76a;
+  border-color: #7d6a3a;
+  box-shadow: 0 8px 32px rgba(201,168,108,0.22);
+  transform: translateY(-2px) scale(1.04);
+}
+@media (max-width: 600px) {
+  .floating-blog-btn {
+    right: 8px;
+    bottom: 10px;
+    padding: 0.85rem 1.6rem;
+    font-size: 1.18rem;
+    border-radius: 32px;
+    box-shadow: 0 2px 12px rgba(201,168,108,0.13);
+    /* 增大点击区域 */
+    min-width: 120px;
+    min-height: 48px;
+    line-height: 1.2;
+  }
+  .floating-blog-btn:active {
+    background: #fffbe9;
+    color: #bfa76a;
+    border-color: #7d6a3a;
+    box-shadow: 0 4px 18px rgba(201,168,108,0.18);
+    transform: scale(0.98);
+  }
+}
 .content-wrapper {
   position: relative;
   z-index: 1;
