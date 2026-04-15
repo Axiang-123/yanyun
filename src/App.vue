@@ -341,7 +341,8 @@ onBeforeUnmount(() => {
       rel="noopener noreferrer"
       class="floating-blog-btn"
     >
-      查看博客
+      <span class="btn-text">查看博客</span>
+      <span class="btn-icon">→</span>
     </a>
     <div class="particles">
       <div 
@@ -404,11 +405,9 @@ onBeforeUnmount(() => {
                   <span class="btn-text">完整人格录（50题）</span>
                   <span class="btn-icon">→</span>
                 </button>
-              </div>
-
-              <div v-if="canResume" class="resume-actions">
-                <button class="btn-secondary" @click="continueTest">
-                  继续上次测试
+                 <button v-if="canResume" class="btn-primary" @click="continueTest">
+                  <span class="btn-text">继续测试</span>
+                  <span class="btn-icon">→</span>
                 </button>
               </div>
             </div>
@@ -566,49 +565,56 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-/* 悬浮博客按钮样式 */
+/* 悬浮博客按钮样式 - 古风 */
 .floating-blog-btn {
   position: fixed;
-  right: 28px;
-  bottom: 32px;
+  right: 20px;
+  top: 18px;
   z-index: 1002;
-  background: rgba(245, 241, 234, 0.92);
-  border: 1.5px solid #bfa76a;
-  color: #7d6a3a;
-  padding: 0.7rem 1.5rem;
-  font-size: 1.08rem;
-  border-radius: 24px;
-  box-shadow: 0 4px 18px rgba(201,168,108,0.13);
+  color: var(--gold);
+  padding: 0.45rem 1rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.25rem;
+  font-family: inherit;
+  cursor: pointer;
   text-decoration: none;
-  transition: all 0.22s cubic-bezier(.4,1.3,.6,1);
-  font-weight: 600;
+  transition: all var(--transition-normal);
+  overflow: hidden;
+}
+.floating-blog-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(204, 202, 199, 0.25), transparent);
+  transition: left var(--transition-slow);
+}
+.floating-blog-btn:hover::before {
+  left: 100%;
 }
 .floating-blog-btn:hover {
-  background: #fffbe9;
-  color: #bfa76a;
-  border-color: #7d6a3a;
-  box-shadow: 0 8px 32px rgba(201,168,108,0.22);
-  transform: translateY(-2px) scale(1.04);
+  background: linear-gradient(135deg, #cfccca 0%, var(--dark) 100%);
+  box-shadow:
+    0 0 24px rgba(203, 202, 200, 0.35),
+    inset 0 0 20px rgba(201, 168, 108, 0.08);
+  transform: translateY(-2px);
+  color: var(--gold);
+}
+.floating-blog-btn:active {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 16px rgba(201, 168, 108, 0.25),
+    inset 0 0 16px rgba(201, 168, 108, 0.05);
 }
 @media (max-width: 600px) {
   .floating-blog-btn {
-    right: 8px;
-    bottom: 10px;
-    padding: 0.85rem 1.6rem;
-    font-size: 1.18rem;
-    border-radius: 32px;
-    box-shadow: 0 2px 12px rgba(201,168,108,0.13);
-    /* 增大点击区域 */
-    min-width: 120px;
-    min-height: 48px;
-    line-height: 1.2;
-  }
-  .floating-blog-btn:active {
-    background: #fffbe9;
-    color: #bfa76a;
-    border-color: #7d6a3a;
-    box-shadow: 0 4px 18px rgba(201,168,108,0.18);
-    transform: scale(0.98);
+    right: 10px;
+    top: 10px;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.2rem;
   }
 }
 .content-wrapper {
@@ -907,8 +913,8 @@ onBeforeUnmount(() => {
 
 .btn-secondary {
   background: rgba(44, 36, 22, 0.8);
-  border: 1px solid var(--border);
-  color: var(--secondary);
+  border: 1px solid var(--gold);
+  color: var(--gold-lightest);
   padding: 0.6rem 1.2rem;
   font-size: 0.95rem;
   cursor: pointer;
@@ -917,8 +923,9 @@ onBeforeUnmount(() => {
 }
 
 .btn-secondary:hover {
-  border-color: var(--gold);
-  color: var(--gold);
+  background: rgba(61, 50, 37, 0.9);
+  border-color: var(--gold-lightest);
+  color: var(--gold-lightest);
 }
 
 .btn-secondary:disabled {
