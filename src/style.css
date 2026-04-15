@@ -1,20 +1,20 @@
 :root {
-  /* 色彩系统 */
-  --primary: #8B7355;
-  --secondary: #D4C4B0;
-  --accent: #C9A86C;
-  --dark: #2C2416;
-  --light: #F5F0E8;
-  --text: #3D3225;
-  --border: #A69580;
-  --shadow: rgba(44, 36, 22, 0.3);
-  
-  /* 金色系色彩层次 */
-  --gold: #C9A86C;
-  --gold-light: #E0C88C;
-  --gold-dark: #A68A4A;
-  --gold-darker: #7D6A3A;
-  --gold-lightest: #F0E4C8;
+  /* 水墨色彩系统 */
+  --primary: #2f2f2f;
+  --secondary: #626262;
+  --accent: #454545;
+  --dark: #161616;
+  --light: #f4f2ee;
+  --text: #2b2b2b;
+  --border: #8a8a8a;
+  --shadow: rgba(0, 0, 0, 0.24);
+
+  /* 保留变量名以兼容已有组件 */
+  --gold: #3d3d3d;
+  --gold-light: #585858;
+  --gold-dark: #252525;
+  --gold-darker: #161616;
+  --gold-lightest: #ece8df;
   
   /* 其他色彩 */
   --red: #8B4513;
@@ -57,11 +57,14 @@
 
 body {
   font-family: 'Noto Serif SC', 'SimSun', serif;
-  background: 
-    linear-gradient(135deg, #1a1510 0%, #2c2416 40%, #3d3225 60%, #1a1510 100%),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 1000 1000' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='inkFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.01' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.05 0 0 0 0.3 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23inkFilter)'/%3E%3C/svg%3E");
+  background:
+    radial-gradient(1000px 650px at 10% 18%, rgba(0, 0, 0, 0.14), transparent 70%),
+    radial-gradient(850px 600px at 85% 12%, rgba(0, 0, 0, 0.1), transparent 70%),
+    radial-gradient(900px 700px at 50% 110%, rgba(0, 0, 0, 0.18), transparent 78%),
+    linear-gradient(140deg, #f5f3ef 0%, #ece8e0 45%, #e2ddd4 100%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 1200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='inkWash'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.013' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 0 0.03 0.08 0.12'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23inkWash)'/%3E%3C/svg%3E");
   min-height: 100vh;
-  color: var(--light);
+  color: var(--text);
   overflow-x: hidden;
   font-size: var(--text-base);
   line-height: 1.6;
@@ -93,9 +96,9 @@ body {
   right: 0;
   bottom: 0;
   background:
-    radial-gradient(ellipse at center, transparent 0%, rgba(26, 21, 16, 0.8) 70%),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.15;
+    radial-gradient(ellipse at center, transparent 0%, rgba(14, 14, 14, 0.2) 82%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.14'/%3E%3C/svg%3E");
+  opacity: 0.22;
   pointer-events: none;
 }
 

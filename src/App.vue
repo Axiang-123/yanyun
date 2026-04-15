@@ -1,24 +1,39 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { questions, personalities } from './data.js'
 
+const STORAGE_KEY = 'yanyun-mbti-progress'
+const QUICK_QUESTION_COUNT = 25
 const currentPhase = ref('welcome')
 const currentQuestionIndex = ref(0)
 const answers = ref([])
 const showContent = ref(false)
 const optionVisible = ref([])
+const canResume = ref(false)
+const copied = ref(false)
+const testMode = ref('full')
+const posterDownloaded = ref(false)
+const isPerformanceMode = ref(false)
+const particleCount = computed(() => (isPerformanceMode.value ? 12 : 30))
+let copiedTimer = null
+let posterTimer = null
 
-const currentQuestion = computed(() => questions[currentQuestionIndex.value])
-const progress = computed(() => ((currentQuestionIndex.value + 1) / questions.length) * 100)
-const totalProgress = computed(() => Math.round((currentQuestionIndex.value / questions.length) * 100))
+const activeQuestions = computed(() =>
+  testMode.value === 'quick' ? questions.slice(0, QUICK_QUESTION_COUNT) : questions
+)
+const activeQuestionCount = computed(() => activeQuestions.value.length)
+const currentQuestion = computed(() => activeQuestions.value[currentQuestionIndex.value])
+const progress = computed(() => ((currentQuestionIndex.value + 1) / activeQuestionCount.value) * 100)
+const totalProgress = computed(() => Math.round((currentQuestionIndex.value / activeQuestionCount.value) * 100))
+const modeLabel = computed(() => (testMode.value === 'quick' ? '快速版（25题）' : '完整版（50题）'))
 
 const personalityType = computed(() => {
-  if (answers.value.length < questions.length) return null
+  if (answers.value.length < activeQuestionCount.value) return null
 
   const scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 }
 
   answers.value.forEach((answer, index) => {
-    const question = questions[index]
+    const question = activeQuestions.value[index]
     const selectedOption = question.options.find(opt => opt.letter === answer)
     if (selectedOption) {
       Object.entries(selectedOption.types).forEach(([type, value]) => {
@@ -39,7 +54,38 @@ const personalityType = computed(() => {
     type
   }
 })
-const selectOption = (letter, index) => {
+const saveProgress = () => {
+  if (currentPhase.value !== 'test') return
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify({
+      answers: answers.value,
+      currentQuestionIndex: currentQuestionIndex.value,
+      mode: testMode.value
+    })
+  )
+}
+
+const clearProgress = () => {
+  localStorage.removeItem(STORAGE_KEY)
+}
+
+const checkResumeState = () => {
+  const saved = localStorage.getItem(STORAGE_KEY)
+  if (!saved) {
+    canResume.value = false
+    return
+  }
+  try {
+    const parsed = JSON.parse(saved)
+    const hasProgress = Array.isArray(parsed.answers) && parsed.answers.length > 0 && ['quick', 'full'].includes(parsed.mode)
+    canResume.value = hasProgress
+  } catch {
+    canResume.value = false
+  }
+}
+
+const selectOption = (letter) => {
   if (optionVisible.value.includes(letter)) return
 
   optionVisible.value.push(letter)
@@ -47,21 +93,34 @@ const selectOption = (letter, index) => {
   setTimeout(() => {
     answers.value.push(letter)
 
-    if (currentQuestionIndex.value < questions.length - 1) {
+    if (currentQuestionIndex.value < activeQuestionCount.value - 1) {
       setTimeout(() => {
         currentQuestionIndex.value++
         optionVisible.value = []
+        saveProgress()
       }, 200)
     } else {
       setTimeout(() => {
         currentPhase.value = 'result'
+        clearProgress()
       }, 300)
     }
   }, 150)
 }
 
-const startTest = () => {
+const goToPreviousQuestion = () => {
+  if (currentQuestionIndex.value === 0 || answers.value.length === 0) return
+  answers.value.pop()
+  currentQuestionIndex.value--
+  optionVisible.value = []
+  saveProgress()
+}
+
+const startTest = (mode = 'full') => {
   showContent.value = false
+  clearProgress()
+  canResume.value = false
+  testMode.value = mode
   setTimeout(() => {
     currentPhase.value = 'test'
     currentQuestionIndex.value = 0
@@ -73,10 +132,33 @@ const startTest = () => {
   }, 300)
 }
 
+const continueTest = () => {
+  const saved = localStorage.getItem(STORAGE_KEY)
+  if (!saved) return
+  try {
+    const parsed = JSON.parse(saved)
+    if (!Array.isArray(parsed.answers) || parsed.answers.length === 0 || !['quick', 'full'].includes(parsed.mode)) return
+    testMode.value = parsed.mode
+    const targetCount = parsed.mode === 'quick' ? QUICK_QUESTION_COUNT : questions.length
+    const maxIndex = Math.max(0, Math.min(parsed.answers.length, targetCount - 1))
+    currentPhase.value = 'test'
+    currentQuestionIndex.value = maxIndex
+    answers.value = parsed.answers.slice(0, maxIndex)
+    optionVisible.value = []
+    showContent.value = true
+  } catch {
+    clearProgress()
+    canResume.value = false
+  }
+}
+
 const restartTest = () => {
   showContent.value = false
+  clearProgress()
+  canResume.value = false
   setTimeout(() => {
     currentPhase.value = 'welcome'
+    testMode.value = 'full'
     currentQuestionIndex.value = 0
     answers.value = []
     setTimeout(() => {
@@ -85,18 +167,177 @@ const restartTest = () => {
   }, 300)
 }
 
+const copyResult = async () => {
+  if (!personalityType.value) return
+  const resultText = [
+    '我在燕云·十六声 江湖人格录测试中的结果：',
+    `${personalityType.value.name}（${personalityType.value.type}）`,
+    `测试模式：${modeLabel.value}`,
+    personalityType.value.title,
+    `特质：${personalityType.value.traits.join(' / ')}`,
+    personalityType.value.match
+  ].join('\n')
+  try {
+    await navigator.clipboard.writeText(resultText)
+    copied.value = true
+    if (copiedTimer) clearTimeout(copiedTimer)
+    copiedTimer = setTimeout(() => {
+      copied.value = false
+    }, 1800)
+  } catch (error) {
+    console.error('复制失败', error)
+  }
+}
+
+const downloadPoster = () => {
+  if (!personalityType.value) return
+
+  const width = 1080
+  const height = 1920
+  const canvas = document.createElement('canvas')
+  canvas.width = width
+  canvas.height = height
+  const ctx = canvas.getContext('2d')
+  if (!ctx) return
+
+  const theme = {
+    bgStart: '#f6f0e4',
+    bgMiddle: '#efe5d3',
+    bgEnd: '#e5d8be',
+    borderMain: 'rgba(125, 106, 58, 0.85)',
+    borderSub: 'rgba(125, 106, 58, 0.5)',
+    titleMain: '#7d6a3a',
+    titleSub: '#8b7355',
+    textPrimary: '#3d3225',
+    textMuted: '#6b5a35',
+    panel: 'rgba(245, 236, 218, 0.95)',
+    qrBorder: 'rgba(125, 106, 58, 0.8)'
+  }
+
+  // Background gradient
+  const bg = ctx.createLinearGradient(0, 0, width, height)
+  bg.addColorStop(0, theme.bgStart)
+  bg.addColorStop(0.55, theme.bgMiddle)
+  bg.addColorStop(1, theme.bgEnd)
+  ctx.fillStyle = bg
+  ctx.fillRect(0, 0, width, height)
+
+  // Decorative frame
+  ctx.strokeStyle = theme.borderMain
+  ctx.lineWidth = 3
+  ctx.strokeRect(56, 56, width - 112, height - 112)
+  ctx.strokeStyle = theme.borderSub
+  ctx.lineWidth = 1
+  ctx.strokeRect(76, 76, width - 152, height - 152)
+
+  // Header
+  ctx.fillStyle = theme.titleMain
+  ctx.textAlign = 'center'
+  ctx.font = 'bold 64px "Noto Serif SC", serif'
+  ctx.fillText('燕云·十六声', width / 2, 220)
+  ctx.font = '42px "Noto Serif SC", serif'
+  ctx.fillStyle = theme.titleSub
+  ctx.fillText('江湖人格录', width / 2, 290)
+
+  // Type block
+  ctx.fillStyle = theme.textPrimary
+  ctx.font = 'bold 118px "Noto Serif SC", serif'
+  ctx.fillText(personalityType.value.type, width / 2, 530)
+  ctx.fillStyle = theme.titleMain
+  ctx.font = 'bold 72px "Noto Serif SC", serif'
+  ctx.fillText(personalityType.value.name, width / 2, 635)
+  ctx.fillStyle = theme.titleSub
+  ctx.font = '42px "Noto Serif SC", serif'
+  ctx.fillText(personalityType.value.title, width / 2, 700)
+
+  // Meta lines
+  ctx.fillStyle = theme.textMuted
+  ctx.font = '32px "Noto Serif SC", serif'
+  ctx.fillText(`测试模式：${modeLabel.value}`, width / 2, 800)
+  ctx.fillText(`题量：${activeQuestionCount.value} 题`, width / 2, 850)
+
+  // Information panel
+  ctx.fillStyle = theme.panel
+  ctx.fillRect(92, 910, width - 184, 390)
+  ctx.strokeStyle = theme.borderSub
+  ctx.strokeRect(92, 910, width - 184, 390)
+
+  // Traits section
+  ctx.textAlign = 'left'
+  ctx.fillStyle = theme.titleMain
+  ctx.font = 'bold 40px "Noto Serif SC", serif'
+  ctx.fillText('核心特质', 120, 980)
+  ctx.fillStyle = theme.textPrimary
+  ctx.font = '34px "Noto Serif SC", serif'
+  ctx.fillText(personalityType.value.traits.join(' / '), 120, 1040)
+
+  // Match section
+  ctx.fillStyle = theme.titleMain
+  ctx.font = 'bold 40px "Noto Serif SC", serif'
+  ctx.fillText('推荐方向', 120, 1140)
+  ctx.fillStyle = theme.textPrimary
+  ctx.font = '34px "Noto Serif SC", serif'
+  ctx.fillText(personalityType.value.match, 120, 1200)
+
+  // QR placeholder block
+  const qrSize = 220
+  const qrX = width / 2 - qrSize / 2
+  const qrY = 1330
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.9)'
+  ctx.fillRect(qrX, qrY, qrSize, qrSize)
+  ctx.strokeStyle = theme.qrBorder
+  ctx.lineWidth = 4
+  ctx.strokeRect(qrX, qrY, qrSize, qrSize)
+  ctx.strokeStyle = theme.qrBorder
+  ctx.lineWidth = 2
+  ctx.strokeRect(qrX + 12, qrY + 12, qrSize - 24, qrSize - 24)
+  ctx.fillStyle = theme.textMuted
+  ctx.textAlign = 'center'
+  ctx.font = '28px "Noto Serif SC", serif'
+  ctx.fillText('分享二维码', width / 2, qrY + qrSize / 2 + 10)
+  ctx.font = '24px "Noto Serif SC", serif'
+  ctx.fillText('（预留位）', width / 2, qrY + qrSize / 2 + 45)
+
+  // Footer
+  ctx.textAlign = 'center'
+  ctx.fillStyle = theme.textMuted
+  ctx.font = '30px "Noto Serif SC", serif'
+  ctx.fillText('测字知江湖，论剑见人心', width / 2, 1690)
+
+  const link = document.createElement('a')
+  link.download = `燕云人格-${personalityType.value.type}-水墨海报.png`
+  link.href = canvas.toDataURL('image/png')
+  link.click()
+
+  posterDownloaded.value = true
+  if (posterTimer) clearTimeout(posterTimer)
+  posterTimer = setTimeout(() => {
+    posterDownloaded.value = false
+  }, 1800)
+}
+
 onMounted(() => {
+  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+  const lowCpu = typeof navigator.hardwareConcurrency === 'number' && navigator.hardwareConcurrency <= 4
+  const lowMemory = typeof navigator.deviceMemory === 'number' && navigator.deviceMemory <= 4
+  isPerformanceMode.value = Boolean(reducedMotion || lowCpu || lowMemory)
+  checkResumeState()
   setTimeout(() => {
     showContent.value = true
   }, 300)
 })
+
+onBeforeUnmount(() => {
+  if (copiedTimer) clearTimeout(copiedTimer)
+  if (posterTimer) clearTimeout(posterTimer)
+})
 </script>
 
 <template>
-  <div class="page-container">
+  <div class="page-container" :class="{ 'performance-mode': isPerformanceMode }">
     <div class="particles">
       <div 
-        v-for="i in 30" 
+        v-for="i in particleCount" 
         :key="i" 
         class="particle" 
         :class="['small', 'medium', 'large'][Math.floor(Math.random() * 3)]"
@@ -136,16 +377,32 @@ onMounted(() => {
               <div class="rules-section">
                 <h3>测试须知</h3>
                 <ul class="rules-list">
-                  <li v-for="(rule, i) in ['共 50 道题目', '根据直觉选择最符合你的选项', '没有正确答案，随心而动即可']" :key="i" :style="{ animationDelay: i * 0.2 + 's' }">
+                  <li v-for="(rule, i) in ['可选快速版（25题）或完整版（50题）', '根据直觉选择最符合你的选项', '无标准答案，可中途退出并自动续测']" :key="i" :style="{ animationDelay: i * 0.2 + 's' }">
                     {{ rule }}
                   </li>
                 </ul>
               </div>
 
-              <button class="btn-primary" @click="startTest">
-                <span class="btn-text">踏入江湖</span>
-                <span class="btn-icon">→</span>
-              </button>
+              <p class="content-notice">
+                本文为娱乐向游戏吐槽，不构成心理测评结论；请勿使用低俗辱骂或针对任何现实群体的人身攻击。
+              </p>
+
+              <div class="mode-actions">
+                <button class="btn-primary" @click="startTest('quick')">
+                  <span class="btn-text">快速入局（25题）</span>
+                  <span class="btn-icon">⚡</span>
+                </button>
+                <button class="btn-primary" @click="startTest('full')">
+                  <span class="btn-text">完整人格录（50题）</span>
+                  <span class="btn-icon">→</span>
+                </button>
+              </div>
+
+              <div v-if="canResume" class="resume-actions">
+                <button class="btn-secondary" @click="continueTest">
+                  继续上次测试
+                </button>
+              </div>
             </div>
           </Transition>
 
@@ -157,12 +414,17 @@ onMounted(() => {
         </div>
 
         <div v-else-if="currentPhase === 'test'" class="test-phase">
+          <div class="test-actions">
+            <button class="btn-secondary" :disabled="currentQuestionIndex === 0" @click="goToPreviousQuestion">
+              上一题
+            </button>
+          </div>
           <div class="test-header">
             <div class="progress-info">
               <span class="question-count">
                 <span class="label">第</span>
                 <span class="value">{{ currentQuestionIndex + 1 }}</span>
-                <span class="label">/ {{ questions.length }} 问</span>
+                <span class="label">/ {{ activeQuestionCount }} 问</span>
               </span>
               <span class="total-progress">{{ totalProgress }}%</span>
             </div>
@@ -189,7 +451,11 @@ onMounted(() => {
               class="option-card"
               :class="{ 'option-visible': showContent, 'option-selected': optionVisible.includes(option.letter) }"
               :style="{ animationDelay: index * 0.1 + 's' }"
-              @click="selectOption(option.letter, index)"
+              role="button"
+              tabindex="0"
+              @click="selectOption(option.letter)"
+              @keydown.enter="selectOption(option.letter)"
+              @keydown.space.prevent="selectOption(option.letter)"
             >
               <div class="option-inner">
                 <span class="option-letter">{{ option.letter }}</span>
@@ -212,6 +478,10 @@ onMounted(() => {
           </div>
 
           <div class="result-content">
+            <div class="result-meta">
+              <span class="meta-pill">{{ modeLabel }}</span>
+              <span class="meta-pill">已答 {{ answers.length }}/{{ activeQuestionCount }}</span>
+            </div>
             <div class="result-type-wrapper">
               <div class="result-glow"></div>
               <div class="result-type">
@@ -242,12 +512,36 @@ onMounted(() => {
               <span class="match-icon">⚔</span>
               <span>{{ personalityType.match }}</span>
             </div>
+
+            <div class="profile-card">
+              <h4 class="profile-card-title">江湖人格档案</h4>
+              <div class="profile-card-grid">
+                <div class="profile-card-item">
+                  <span class="item-label">人格代号</span>
+                  <span class="item-value">{{ personalityType.type }}</span>
+                </div>
+                <div class="profile-card-item">
+                  <span class="item-label">江湖名号</span>
+                  <span class="item-value">{{ personalityType.name }}</span>
+                </div>
+                <div class="profile-card-item full">
+                  <span class="item-label">核心定位</span>
+                  <span class="item-value">{{ personalityType.title }}</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="result-footer">
             <div class="decoration-line">
               <div class="line-glow"></div>
             </div>
+            <button class="btn-secondary" @click="copyResult">
+              {{ copied ? '已复制结果' : '复制结果文案' }}
+            </button>
+            <button class="btn-secondary" @click="downloadPoster">
+              {{ posterDownloaded ? '海报已下载' : '下载分享海报' }}
+            </button>
             <button class="btn-primary" @click="restartTest">
               <span class="btn-text">再次踏入江湖</span>
               <span class="btn-icon">↺</span>
@@ -526,6 +820,16 @@ onMounted(() => {
   color: var(--gold);
 }
 
+.content-notice {
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: var(--secondary);
+  opacity: 0.85;
+  text-align: center;
+  margin: 0 0 1.25rem;
+  padding: 0 var(--space-xs);
+}
+
 .btn-primary {
   background: linear-gradient(135deg, var(--dark) 0%, #3d3225 100%);
   border: 2px solid var(--gold);
@@ -542,6 +846,27 @@ onMounted(() => {
   transition: all var(--transition-normal);
   border-radius: 2px;
   will-change: transform, box-shadow;
+}
+
+.btn-secondary {
+  background: rgba(44, 36, 22, 0.8);
+  border: 1px solid var(--border);
+  color: var(--secondary);
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  margin-bottom: var(--space-md);
+}
+
+.btn-secondary:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 .btn-primary::before {
@@ -603,6 +928,16 @@ onMounted(() => {
   animation: fade-in 0.5s ease forwards 1.5s;
 }
 
+.resume-actions {
+  margin-bottom: var(--space-md);
+}
+
+.mode-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
 .footer-text {
   letter-spacing: 0.3rem;
 }
@@ -624,6 +959,12 @@ onMounted(() => {
 
 .test-phase {
   text-align: center;
+}
+
+.test-actions {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: var(--space-sm);
 }
 
 .test-header {
@@ -890,6 +1231,26 @@ onMounted(() => {
   pointer-events: none;
 }
 
+.result-meta {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--border);
+  color: var(--secondary);
+  font-size: 0.88rem;
+  background: rgba(26, 21, 16, 0.6);
+}
+
 .result-type-wrapper {
   position: relative;
   display: inline-block;
@@ -1046,15 +1407,528 @@ onMounted(() => {
   animation: fade-in 0.5s ease forwards 1s;
 }
 
+.profile-card {
+  margin-top: var(--space-lg);
+  border: 1px solid rgba(201, 168, 108, 0.45);
+  background: linear-gradient(160deg, rgba(26, 21, 16, 0.82), rgba(44, 36, 22, 0.7));
+  padding: var(--space-md);
+  text-align: left;
+  opacity: 0;
+  animation: fade-in 0.5s ease forwards 1.2s;
+}
+
+.profile-card-title {
+  color: var(--gold);
+  font-size: 1rem;
+  letter-spacing: 0.2rem;
+  margin-bottom: var(--space-md);
+}
+
+.profile-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+
+.profile-card-item {
+  border: 1px solid rgba(166, 149, 128, 0.5);
+  padding: 0.65rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-height: 64px;
+}
+
+.profile-card-item.full {
+  grid-column: span 2;
+}
+
+.item-label {
+  color: var(--secondary);
+  font-size: 0.82rem;
+}
+
+.item-value {
+  color: var(--light);
+  font-size: 0.95rem;
+}
+
 .match-icon {
   color: var(--gold);
 }
 
 .result-footer {
   margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
 }
 
 .result-footer .decoration-line {
   margin-bottom: 2rem;
+}
+
+@media (max-width: 640px) {
+  .profile-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-card-item.full {
+    grid-column: auto;
+  }
+}
+
+/* Water-ink theme overrides */
+.title-bg {
+  color: rgba(18, 18, 18, 0.08);
+}
+
+.title-text {
+  color: #2a2a2a;
+}
+
+.title-text span {
+  text-shadow:
+    0 0 2px rgba(0, 0, 0, 0.15),
+    1px 2px 2px rgba(0, 0, 0, 0.18);
+}
+
+.subtitle,
+.intro-text,
+.rules-list,
+.result-label,
+.result-title,
+.result-match,
+.item-label {
+  color: #5b5b5b;
+}
+
+.highlight-line,
+.question-title,
+.type-chinese,
+.type-english,
+.profile-card-title {
+  color: #2f2f2f;
+}
+
+.particles {
+  mix-blend-mode: multiply;
+  opacity: 0.75;
+}
+
+.particle {
+  box-shadow: 0 0 6px rgba(32, 32, 32, 0.22);
+}
+
+.particle.small,
+.particle.medium,
+.particle.large {
+  background: rgba(34, 34, 34, 0.55);
+}
+
+.btn-primary {
+  background: linear-gradient(140deg, rgba(246, 243, 237, 0.96) 0%, rgba(228, 223, 213, 0.96) 100%);
+  border: 1px solid rgba(47, 47, 47, 0.75);
+  color: #2f2f2f;
+  letter-spacing: 0.24rem;
+}
+
+.btn-primary::before {
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.12), transparent);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(140deg, rgba(236, 231, 221, 0.98) 0%, rgba(219, 213, 201, 0.98) 100%);
+  box-shadow:
+    0 5px 18px rgba(0, 0, 0, 0.18),
+    inset 0 0 16px rgba(0, 0, 0, 0.05);
+}
+
+.btn-secondary {
+  background: rgba(245, 241, 234, 0.84);
+  border: 1px solid rgba(78, 78, 78, 0.58);
+  color: #3a3a3a;
+}
+
+.btn-secondary:hover {
+  border-color: #2f2f2f;
+  color: #1f1f1f;
+  background: rgba(234, 228, 217, 0.9);
+}
+
+.rules-section,
+.option-card,
+.result-content,
+.profile-card {
+  background:
+    linear-gradient(155deg, rgba(247, 243, 236, 0.95) 0%, rgba(230, 224, 214, 0.92) 100%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='inkLayer'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.06' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23inkLayer)' opacity='0.12'/%3E%3C/svg%3E");
+  border-color: rgba(84, 84, 84, 0.36);
+}
+
+.result-content,
+.profile-card {
+  box-shadow:
+    0 16px 32px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.option-card::before,
+.option-card.option-selected::before {
+  background: linear-gradient(180deg, rgba(58, 58, 58, 0.92), rgba(24, 24, 24, 0.92));
+}
+
+.option-text,
+.question-text,
+.result-description,
+.item-value,
+.meta-pill {
+  color: #2c2c2c;
+}
+
+.option-letter {
+  border-color: rgba(47, 47, 47, 0.7);
+  color: #2f2f2f;
+}
+
+.option-card:hover,
+.option-card.option-selected {
+  border-color: rgba(30, 30, 30, 0.82);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.14),
+    0 0 0 1px rgba(0, 0, 0, 0.06) inset;
+}
+
+.option-card:hover .option-letter,
+.option-card.option-selected .option-letter {
+  background: #2f2f2f;
+  color: #f4f2ee;
+}
+
+.progress-bar {
+  background: rgba(110, 110, 110, 0.2);
+}
+
+.progress-fill {
+  background: linear-gradient(90deg, #2a2a2a, #666666);
+}
+
+.progress-glow {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45));
+}
+
+.result-type {
+  text-shadow:
+    0 0 6px rgba(0, 0, 0, 0.14),
+    0 0 16px rgba(0, 0, 0, 0.1);
+}
+
+.result-glow {
+  background: radial-gradient(ellipse, rgba(26, 26, 26, 0.18) 0%, transparent 70%);
+}
+
+.result-match {
+  border-top-color: rgba(80, 80, 80, 0.38);
+}
+
+.meta-pill,
+.profile-card-item {
+  border-color: rgba(78, 78, 78, 0.42);
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.performance-mode .particle {
+  animation-duration: calc(var(--duration) * 0.7);
+  box-shadow: none;
+}
+
+.performance-mode .line-glow,
+.performance-mode .progress-glow,
+.performance-mode .option-shine {
+  animation: none;
+  transition: none;
+}
+
+.performance-mode .result-glow {
+  animation: none;
+  opacity: 0.35;
+}
+
+.performance-mode .btn-primary:hover,
+.performance-mode .option-card:hover,
+.performance-mode .trait-tag:hover {
+  box-shadow: none;
+}
+
+/* Mobile-first refinements */
+@media (max-width: 1024px) {
+  .content-wrapper {
+    padding: 0 var(--space-sm);
+  }
+
+  .title-bg {
+    font-size: 4.2rem;
+    letter-spacing: 0.55rem;
+  }
+
+  .question-text {
+    font-size: 1.08rem;
+  }
+
+  .result-content {
+    padding: 2rem 1.3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-wrapper {
+    padding: 0;
+  }
+
+  .title-decoration {
+    margin-bottom: 2rem;
+  }
+
+  .title-bg {
+    font-size: 2.5rem;
+    letter-spacing: 0.22rem;
+  }
+
+  .title-text {
+    letter-spacing: 0.2rem;
+    font-size: 1.95rem;
+    line-height: 1.25;
+  }
+
+  .subtitle {
+    letter-spacing: 0.35rem;
+    font-size: 1rem;
+  }
+
+  .decoration-line {
+    width: min(260px, 72vw);
+  }
+
+  .intro-text {
+    font-size: 1rem;
+    line-height: 1.95;
+    margin-bottom: 1.5rem;
+  }
+
+  .rules-section {
+    padding: 1rem;
+  }
+
+  .rules-list {
+    font-size: 0.92rem;
+    line-height: 1.8;
+  }
+
+  .mode-actions,
+  .resume-actions {
+    width: 100%;
+  }
+
+  .mode-actions .btn-primary,
+  .resume-actions .btn-secondary,
+  .test-actions .btn-secondary {
+    width: 100%;
+  }
+
+  .test-actions {
+    margin-bottom: var(--space-md);
+  }
+
+  .progress-info {
+    font-size: 0.82rem;
+  }
+
+  .question-title {
+    font-size: 1.18rem;
+    letter-spacing: 0.14rem;
+  }
+
+  .question-text {
+    font-size: 1rem;
+    line-height: 1.62;
+  }
+
+  .options-section {
+    gap: 0.7rem;
+  }
+
+  .option-inner {
+    padding: 1rem 0.9rem;
+    align-items: flex-start;
+  }
+
+  .option-letter {
+    width: 1.8rem;
+    height: 1.8rem;
+    min-width: 1.8rem;
+    margin-right: 0.68rem;
+  }
+
+  .option-text {
+    font-size: 0.94rem;
+    line-height: 1.5;
+  }
+
+  .result-label {
+    letter-spacing: 0.22rem;
+    font-size: 1rem;
+  }
+
+  .result-type {
+    font-size: 2.1rem;
+    letter-spacing: 0.2rem;
+  }
+
+  .type-english {
+    font-size: 1.18rem;
+    letter-spacing: 0.12rem;
+  }
+
+  .result-title {
+    font-size: 1.05rem;
+    letter-spacing: 0.12rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .result-description {
+    font-size: 0.94rem;
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+  }
+
+  .trait-tag {
+    font-size: 0.86rem;
+    padding: 0.4rem 0.7rem;
+  }
+
+  .result-footer {
+    width: 100%;
+    gap: 0.55rem;
+  }
+
+  .result-footer .btn-secondary,
+  .result-footer .btn-primary {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .particles {
+    opacity: 0.38;
+  }
+
+  .title-bg {
+    display: none;
+  }
+
+  .title-text {
+    font-size: 1.58rem;
+    gap: 0.02rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+    letter-spacing: 0.2rem;
+  }
+
+  .footer-decoration {
+    margin-top: 1.9rem;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-text {
+    letter-spacing: 0.12rem;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    padding: 0.74rem 0.85rem;
+    font-size: 0.92rem;
+    letter-spacing: 0.06rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .question-count .value {
+    font-size: 1rem;
+  }
+
+  .result-content {
+    padding: 1.15rem 0.9rem;
+  }
+
+  .meta-pill {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .result-traits {
+    gap: 0.55rem;
+    margin-bottom: 1.3rem;
+  }
+
+  .profile-card {
+    margin-top: var(--space-md);
+    padding: 0.85rem;
+  }
+
+  .profile-card-item {
+    min-height: auto;
+    padding: 0.5rem 0.55rem;
+  }
+}
+
+/* Touch-first interaction optimizations */
+@media (hover: none), (pointer: coarse) {
+  .btn-primary,
+  .btn-secondary {
+    min-height: 46px;
+    padding-top: 0.78rem;
+    padding-bottom: 0.78rem;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .option-card {
+    min-height: 56px;
+    transform: none;
+  }
+
+  .option-card:hover,
+  .option-card.option-selected {
+    transform: none;
+  }
+
+  .option-card:hover .option-shine {
+    left: -100%;
+  }
+
+  .option-card:active {
+    transform: scale(0.995);
+    box-shadow:
+      0 3px 12px rgba(0, 0, 0, 0.14),
+      0 0 0 1px rgba(0, 0, 0, 0.08) inset;
+  }
+
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    transform: none;
+  }
+
+  .btn-primary:active,
+  .btn-secondary:active {
+    transform: scale(0.985);
+  }
+
+  .progress-fill {
+    transition: width 0.25s ease;
+  }
 }
 </style>
