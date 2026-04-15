@@ -335,6 +335,17 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="page-container" :class="{ 'performance-mode': isPerformanceMode }">
+    <div style="width:100%;text-align:right;padding:18px 0 0 0;z-index:10;position:relative;">
+      <a
+        href="https://axiang-123.github.io/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-secondary"
+        style="display:inline-block;padding:6px 18px;margin:0 18px 0 0;text-decoration:none;"
+      >
+        查看博客地址
+      </a>
+    </div>
     <div class="particles">
       <div 
         v-for="i in particleCount" 
@@ -546,6 +557,10 @@ onBeforeUnmount(() => {
               <span class="btn-text">再次踏入江湖</span>
               <span class="btn-icon">↺</span>
             </button>
+            <div style="margin-top: 22px; text-align:center;">
+              <span style="font-size: 1.1em; font-weight: bold;">找侠缘游戏搜索：</span>
+              <span style="margin-left: 8px; color: #7d6a3a;">游戏ID:从别</span>
+            </div>
           </div>
         </div>
       </div>
